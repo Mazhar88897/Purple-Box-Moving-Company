@@ -5,17 +5,17 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Purple Box Moving Company',
-  description: 'Purple Box Moving Company is a platform that allows you to find the best CNC machines for your needs.',
-  keywords: ['CNC', 'Machines', 'Tools', 'DIY', 'Hobby', 'Projects'],
-  authors: [{ name: 'James Dean Designs Limited', url: 'https://jamesdeandesigns.com' }],
-  creator: 'James Dean Designs Limited',
-  publisher: 'James Dean Designs Limited',
+  title: 'Purple Box Moving Company - Professional Moving Services in UAE',
+  description: 'Purple Box Moving Company provides professional moving and packing services in the UAE. Fast quotes, secure packing, COI handling, and reliable local & commercial moves.',
+  keywords: ['Moving Company', 'Packing Services', 'UAE Moving', 'COI Certificate', 'Professional Movers', 'Local Moving', 'Commercial Moving', 'Dubai Movers', 'Abu Dhabi Movers'],
+  authors: [{ name: 'Purple Box Moving Company', url: 'https://purpleboxmovers.com' }],
+  creator: 'Purple Box Moving Company',
+  publisher: 'Purple Box Moving Company',
   icons: {
     icon: [
       {
-        url: "/only-cnc.svg",
-        type: "image/svg+xml",
+        url: "/box.png",
+        type: "image/png",
         sizes: "any",
       },
       {
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     ],
     apple: [
       {
-        url: "/only-cnc.svg",
+        url: "/box.png",
         sizes: "180x180",
-        type: "image/svg+xml",
+        type: "image/png",
       },
     ],
   },
