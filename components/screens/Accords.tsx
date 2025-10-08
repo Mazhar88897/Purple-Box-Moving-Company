@@ -50,7 +50,7 @@ export default function COIFAQ() {
   }
 
   return (
-    <section className="px-6 py-10">
+    <section className="px-6 py-10 mx-4">
         <div className="mx-auto max-w-5xl overflow-visible">
         {/* Hero image with pink underline accent */}
         <div className="grid items-center gap-10 md:grid-cols-2">

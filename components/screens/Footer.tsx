@@ -73,9 +73,9 @@ export default function Footer() {
               <img src="/purple.png" alt="Only CNCs Logo" width={150} height={50} className="h-auto" />
             </div>
             <div className="flex flex-col items-center md:items-start space-y-1">
-              <p className="text-sm mb-1 md:mb-0 inline-flex items-center gap-2 justify-center md:justify-start"><Phone size={18} /> +1 917-353-9666</p>
-              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start"> <MapPin size={18} /> DAN LUNELL CORPORATION, 418 Broadway Ste Y, Albany, NY 12207</p>
-              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start"> <Mail size={18} /> ldc.co@mail.ru </p>
+              <p className="text-sm mb-1 md:mb-0 inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"><Phone className="w-4 h-4 md:w-[18px] hidden md:block md:h-[18px]" /> +1 917-353-9666</p>
+              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"> <MapPin className="w-4 h-4 md:w-[18px] md:h-[18px] hidden md:block  " /> DAN LUNELL CORPORATION, 418 Broadway Ste Y, Albany, NY 12207</p>
+              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"> <Mail className="w-4 h-4 md:w-[18px] md:h-[18px] hidden md:block  " /> ldc.co@mail.ru </p>
             </div>
             <div className="space-y-1 md:space-y-0"> 
               <p className="text-sm font-bold mb-1 md:mb-0">Purple Box Moving Company </p>

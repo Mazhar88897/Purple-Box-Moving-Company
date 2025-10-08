@@ -2,7 +2,7 @@ import React from 'react';
 
 const Description = () => {
   return (
-    <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-16 px-4 mx-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-20">
         {/* Section 1: Image left, text right */}
         <div className="grid items-center gap-10 md:grid-cols-2">
@@ -65,16 +65,16 @@ const Description = () => {
             </div>
           </div>
 
-          <div className="relative w-full">
+           <div className="relative w-full">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/purple%203.jpg"
-                alt="Moving truck outside building"
+                src="/purple5.jpg"
+                alt="Team member working on laptop"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="absolute -top-4 -right-4 z-0 h-[92%] w-[92%] rounded-xl bg-purple-700" />
-          </div>
+            </div>
         </div>
       </div>
     </section>

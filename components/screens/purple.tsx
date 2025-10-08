@@ -1,6 +1,6 @@
 export default function Purple() {
   return (
-    <section className="w-full bg-white py-14 px-4 md:px-6 lg:px-8">
+    <section className="w-full bg-white py-14 px-4 md:px-6 lg:px-8 mx-4">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-3xl font-extrabold leading-tight text-[#0c1241] sm:text-4xl">
           Our simple COI process & steps
@@ -28,10 +28,10 @@ export default function Purple() {
             Ldc.co@mail.ru
           </a>
         </div>
+        <div className="md:col-span-2 space-y-6">
+        {/* <ol className="relative pl-6 space-y-6 "> */}
 
-        <ol className="relative pl-6 space-y-6 md:col-span-2">
-
-          <li className="relative">
+        
            
             <p className="text-[#0c1241]/90">
              <span className="text-[#9A4CB9] text-md font-bold">1.</span>  Prior to planning your move, contact your Building Management and
@@ -39,9 +39,9 @@ export default function Purple() {
               they require. You will need to contact both your move out and move
               in building management team.
             </p>
-          </li>
+       
 
-          <li className="relative">
+       
 
             <p className="text-[#0c1241]/90">
             <span className="text-[#9A4CB9] text-md font-bold">2.</span>  Provide the received details and any additional information to your
@@ -52,10 +52,9 @@ export default function Purple() {
               planning work that limits delays from corrections and changes that
               we take care of for you.
             </p>
-          </li>
+   
 
-          <li className="relative">
-
+              
             <p className="text-[#0c1241]/90">
             <span className="text-[#9A4CB9] text-md font-bold">3.</span>  We will ensure all requirements are met including: the minimum
               insurance value, the right timing to ensure it’s finalized well
@@ -63,25 +62,26 @@ export default function Purple() {
               the COI so it’s acceptable to your Building Management
               requirements.
             </p>
-          </li>
+        
 
-          <li className="relative">
+       
                          
             <p className="text-[#0c1241]/90">
             <span className="text-[#9A4CB9] text-md font-bold">4.</span> We will also send your COI via email for your own records and
               confirm it’s approved.
             </p>
-          </li>
+    
 
-          <li className="relative">
+        
           
             <p className="text-[#0c1241]/90">
             <span className="text-[#9A4CB9] text-md font-bold">5.</span> Your approved COI will insure you for any accidental building
               damage that may occur in your move, which means you are not out of
               pocket if that happens.
             </p>
-          </li>
-        </ol>
+       
+        {/* </ol> */}
+        </div>
       </div>
     </section>
   );
