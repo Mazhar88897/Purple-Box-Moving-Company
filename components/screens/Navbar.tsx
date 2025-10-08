@@ -54,7 +54,7 @@ export default function Navbar() {
             <div>
              
             
-              <Image src="/logo-b.svg" height={60} width={60} alt="Logo" />
+              <Image src="/box.png" height={60} width={60} alt="Logo" />
            
             </div>
             <nav className="flex flex-col space-y-4 pt-10">
@@ -65,13 +65,7 @@ export default function Navbar() {
               >
                 About
               </Link>
-              <Link
-                href="/main/contact"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                onClick={() => setIsOpen(false)}
-              >
-                Contact
-              </Link>
+             
               <Link
                 href="/main/faq"
                 className="text-sm font-medium text-gray-700 hover:text-gray-900"
@@ -86,16 +80,10 @@ export default function Navbar() {
               >
                 Reviews
               </Link>
-              <Link
-                href="/auth/sign-in"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                onClick={() => setIsOpen(false)}
-              >
-                Login
-              </Link>
+          
               
-             <Link        href="/auth/sign-up" className="bg-gray-900 text-center p-1 px-3 text-white font-semibold rounded-mid hover:bg-gray-800 " onClick={() => setIsOpen(false)}>
-                Create an Account
+             <Link        href="/main/contact" className="bg-gray-900 text-center p-1 px-3 text-white font-semibold rounded-mid hover:bg-gray-800 " onClick={() => setIsOpen(false)}>
+                Get a Quote
               </Link>
             </nav>
           </SheetContent>
