@@ -1,15 +1,15 @@
 export default function Purple() {
   return (
-    <section className="w-full bg-white py-14 px-4 md:px-6 lg:px-8 mx-4">
+    <section className="w-full bg-white py-14 px-4 md:px-6 lg:px-8 ">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-3xl font-extrabold leading-tight text-[#0c1241] sm:text-4xl">
+        <h2 className="text-3xl font-extrabold leading-tight text-[#0c1241] sm:text-4xl mx-4">
           Our simple COI process & steps
         </h2>
       </div>
 
       <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-10 items-start mt-6">
        
-        <div className="md:col-span-1 text-purple-700">
+        <div className="md:col-span-1 mx-4 text-purple-700">
         <div>
             <img src="/purple2.png" alt="COI" className="w-full h-full object-cover" />
         </div>
@@ -28,7 +28,7 @@ export default function Purple() {
             Ldc.co@mail.ru
           </a>
         </div>
-        <div className="md:col-span-2 space-y-6">
+        <div className="md:col-span-2 space-y-6 mx-4">
         {/* <ol className="relative pl-6 space-y-6 "> */}
 
         
