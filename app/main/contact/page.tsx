@@ -203,9 +203,10 @@ const ContactPage = () => {
     <div className="mt-4 sm:my-10 m-3  flex flex-col items-center justify-center">
       <Heading
         color="black"
-        heading1="Contact "
-        heading2="Us"
+        heading1="Get A "
+        heading2="Free Quote"
         subheading="Complete these 3 quick steps to request your free quote."
+        
       />
       <div className='max-w-3xl mx-auto my-12'>
 <div className="grid items-center gap-10 md:grid-cols-2">
