@@ -77,10 +77,10 @@ export default function COIFAQ() {
               </p>
             </div> */}
           </div>
-          <div className="relative w-full md:-translate-x-[20%]">
+          <div className="relative w-full md:w-3/4  md:-translate-x-[20%]">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/purple5.jpg"
+                src="/purple 3.jpg"
                 alt="Team member working on laptop"
                 className="h-full w-full object-cover"
               />

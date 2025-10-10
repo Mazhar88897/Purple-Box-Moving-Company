@@ -16,13 +16,16 @@ import Description from "@/components/screens/description"
 import Purple from "@/components/screens/purple"
 import Subfooter from "@/components/screens/subfooter"
 import Postfooter from "@/components/screens/postfooter"
+import MediaReviews from "@/components/screens/media"
+import AwardsSlider from "@/components/screens/slide"
 
 export default function Home() {
   return (
     <main className="">
       <Navbar />
       <Hero />
-
+      <MediaReviews />
+      <AwardsSlider />  
 
 
 

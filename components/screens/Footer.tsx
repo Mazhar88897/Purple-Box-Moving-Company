@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Left Column - Logo and Text */}
           <div className="space-y-4 md:col-span-2">
-            <div className=" p-2 inline-block rounded-[12px] bg-white">
+            <div className=" p-2 inline-block rounded-full bg-white">
               <Image src="/box.png" alt="Only CNCs Logo" width={150} height={50} className="h-auto" />
             </div>
             <div>

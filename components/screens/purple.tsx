@@ -10,8 +10,8 @@ export default function Purple() {
       <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-10 items-start mt-6">
        
         <div className="md:col-span-1 mx-4 text-purple-700">
-        <div>
-            <img src="/purple2.png" alt="COI" className="w-full h-full object-cover" />
+        <div >
+            <img src="/purple.png" alt="COI" className="w-full h-full object-cover" />
         </div>
           <p className="mt-6 text-lg font-bold text-[#9A4CB9]">
             Our straightforward COI process will ensure that come moving day, you

@@ -6,7 +6,7 @@ const Description = () => {
       <div className="mx-auto max-w-6xl space-y-20">
         {/* Section 1: Image left, text right */}
         <div className="grid items-center gap-10 md:grid-cols-2">
-          <div className="relative w-full">
+          <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
                 src="/purple5.jpg"
@@ -65,10 +65,10 @@ const Description = () => {
             </div>
           </div>
 
-           <div className="relative w-full">
+           <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/purple5.jpg"
+                src="/purple 4.jpg"
                 alt="Team member working on laptop"
                 className="h-full w-full object-cover"
               />
