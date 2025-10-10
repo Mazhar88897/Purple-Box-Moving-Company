@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function AwardsSlider() {
   const [isDragging, setIsDragging] = useState(false)
@@ -66,7 +67,7 @@ export default function AwardsSlider() {
             <div className="text-white px-2 md:px-4 py-1 md:py-2 rounded-lg font-bold text-xs md:text-sm">
               INC.5000
             </div>
-            <span className="font-bold text-sm md:text-lg">"UAE's Fastest Growing Mover"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;UAE&rsquo;s Fastest Growing Mover&rdquo;</span>
           </div>
 
           {/* Award 2 - Forbes */}
@@ -74,7 +75,7 @@ export default function AwardsSlider() {
             <div className="px-2 md:px-4 py-1 md:py-2 rounded-lg">
               <span className="text-white font-bold text-sm md:text-lg" style={{fontFamily: 'serif'}}>Forbes</span>
             </div>
-            <span className="font-bold text-sm md:text-lg">"Voted Dubai's Best Mover"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Voted Dubai&rsquo;s Best Mover&rdquo;</span>
           </div>
 
           {/* Award 3 - Fortune */}
@@ -82,7 +83,7 @@ export default function AwardsSlider() {
             <div className="px-2 md:px-4 py-1 md:py-2 rounded-lg">
               <span className="text-white font-bold text-sm md:text-lg">FORTUNE</span>
             </div>
-            <span className="font-bold text-sm md:text-lg">"The Mover Who Cares"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;The Mover Who Cares&rdquo;</span>
           </div>
 
           {/* Award 4 - The New York Times */}
@@ -94,7 +95,7 @@ export default function AwardsSlider() {
                 <div className="text-sm md:text-lg">Times</div>
               </div>
             </div>
-            <span className="font-bold text-sm md:text-lg">"Excellent Service Provider"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Excellent Service Provider&rdquo;</span>
           </div>
 
           {/* Award 5 - Google */}
@@ -107,15 +108,15 @@ export default function AwardsSlider() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
             </div>
-            <span className="font-bold text-sm md:text-lg">"Top Rated Moving Company"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Top Rated Moving Company&rdquo;</span>
           </div>
 
           {/* Award 6 - Trustpilot */}
           <div className="flex items-center space-x-2 md:space-x-4">
             <div className="px-2 md:px-4 py-1 md:py-2 rounded-lg">
-              <img src="/trust.png" alt="Trustpilot" className="w-6 h-6 md:w-8 md:h-8" />
+              <Image src="/trust.png" alt="Trustpilot" width={32} height={32} className="w-6 h-6 md:w-8 md:h-8" />
             </div>
-            <span className="font-bold text-sm md:text-lg">"Professional & Reliable"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Professional & Reliable&rdquo;</span>
           </div>
         </div>
 
@@ -126,7 +127,7 @@ export default function AwardsSlider() {
             <div className="text-white px-2 md:px-4 py-1 md:py-2 rounded-lg font-bold text-xs md:text-sm">
               INC.5000
             </div>
-            <span className="font-bold text-sm md:text-lg">"UAE's Fastest Growing Mover"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;UAE&rsquo;s Fastest Growing Mover&rdquo;</span>
           </div>
 
           {/* Award 2 - Forbes */}
@@ -134,7 +135,7 @@ export default function AwardsSlider() {
             <div className="px-2 md:px-4 py-1 md:py-2 rounded-lg">
               <span className="text-white font-bold text-sm md:text-lg" style={{fontFamily: 'serif'}}>Forbes</span>
             </div>
-            <span className="font-bold text-sm md:text-lg">"Voted Dubai's Best Mover"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Voted Dubai&rsquo;s Best Mover&rdquo;</span>
           </div>
 
           {/* Award 3 - Fortune */}
@@ -142,7 +143,7 @@ export default function AwardsSlider() {
             <div className="px-2 md:px-4 py-1 md:py-2 rounded-lg">
               <span className="text-white font-bold text-sm md:text-lg">FORTUNE</span>
             </div>
-            <span className="font-bold text-sm md:text-lg">"The Mover Who Cares"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;The Mover Who Cares&rdquo;</span>
           </div>
 
           {/* Award 4 - The New York Times */}
@@ -154,7 +155,7 @@ export default function AwardsSlider() {
                 <div className="text-sm md:text-lg">Times</div>
               </div>
             </div>
-            <span className="font-bold text-sm md:text-lg">"Excellent Service Provider"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Excellent Service Provider&rdquo;</span>
           </div>
 
           {/* Award 5 - Google */}
@@ -167,15 +168,15 @@ export default function AwardsSlider() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
             </div>
-            <span className="font-bold text-sm md:text-lg">"Top Rated Moving Company"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Top Rated Moving Company&rdquo;</span>
           </div>
 
           {/* Award 6 - Trustpilot */}
           <div className="flex items-center space-x-2 md:space-x-4">
             <div className="px-2 md:px-4 py-1 md:py-2 rounded-lg">
-              <img src="/trust.png" alt="Trustpilot" className="w-6 h-6 md:w-8 md:h-8" />
+              <Image src="/trust.png" alt="Trustpilot" width={32} height={32} className="w-6 h-6 md:w-8 md:h-8" />
             </div>
-            <span className="font-bold text-sm md:text-lg">"Professional & Reliable"</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;Professional & Reliable&rdquo;</span>
           </div>
         </div>
       </div>
