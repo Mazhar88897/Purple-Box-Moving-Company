@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Menu, ArrowUpRight, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Image from "next/image"
@@ -11,80 +11,119 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="w-full  p-3 bg-white">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <header className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600">
+      <div className="container mx-auto flex h-20 items-center  justify-center px-2 sm:px-14">
         {/* Logo */}
+        <div   className=" w-full lg:w-[80%]  flex justify-between">
         <div className="flex items-center">
           <Link href="/" className="flex flex-col">
-          <div className="relative w-[80px] sm:w-[150px] h-[80px]">
-            
+            <div className="relative w-[80px] sm:w-[150px] h-[60px]">
               <Image src="/box.png" alt="Logo" fill className="object-contain" />
             </div>
-               </Link>
-               
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center space-x-6 md:flex">
-          <Link href="/main/about" className="text-sm font-medium text-gray-700 hover:text-gray-900">
+        <nav className="hidden items-center gap-8 md:flex">
+          <Link href="/main/about" className="text-sm font-bold tracking-wider uppercase text-white/90 hover:text-white">
             About
           </Link>
-         
-          <Link href="/main/faq" className="text-sm font-medium text-gray-700 hover:text-gray-900">
+          <Link href="/main/faq" className="text-sm font-semibold tracking-wider uppercase text-white/90 hover:text-white">
             FAQ
           </Link>
-          <Link href="/main/reviews" className="text-sm font-medium text-gray-700 hover:text-gray-900">
+          <Link href="/main/reviews" className="text-sm font-semibold tracking-wider uppercase text-white/90 hover:text-white">
             Reviews
           </Link>
-        
+          <Link href="/main/privacy" className="text-sm font-semibold tracking-wider uppercase text-white/90 hover:text-white">
+            Resources
+          </Link>
+          <Link href="/main/about" className="text-sm font-semibold tracking-wider uppercase text-white/90 hover:text-white">
+            Company
+          </Link>
+        </nav>
 
-           <Link        href="/main/contact" className="bg-gray-900 p-1 px-3 text-white font-semibold rounded-mid hover:bg-gray-800 " onClick={() => setIsOpen(false)}>
-               Get a Quote
-              </Link>  </nav>
+        {/* Right CTAs */}
+        <div className="hidden md:flex items-center gap-6 mt-3">
+          <div className="flex flex-col items-center">
+          <Link href="/main/contact" className="inline-flex items-center gap-2 rounded-md bg-[#221c55] px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm hover:bg-[#1a1645]">
+            Instant Price <ArrowUpRight className="h-4 w-4" />
+            
+          </Link>
+          <span className="mt-1 text-[10px] font-bold tracking-wide text-transparent">x</span>
+       
+
+          </div>
+               
+          <div className="flex flex-col items-center">
+            <a href="tel:+12126517273" className="inline-flex items-center gap-2 rounded-md bg-[#221c55] px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm hover:bg-[#1a1645]">
+              <Phone className="h-4 w-4" /> (212) 651 7273
+            </a>
+            <span className="mt-1 text-[10px] font-bold tracking-wide text-white/90">7 days a week 7AM-9PM</span>
+          </div>
+        </div>
+          
+        </div>
+      
 
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="text-white">
+              <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] md:w-[300px] max-w-[80vw]">
-            <div>
-             
-            
-              <Image src="/box.png" height={60} width={60} alt="Logo" />
-           
+          <SheetContent side="left" className="w-[300px] md:w-[320px] max-w-[85vw]">
+            <div className="flex items-center gap-3">
+              <Image src="/box.png" height={80} width={80} alt="Logo" />
+              {/* <span className="text-lg font-bold">Purple Box</span> */}
             </div>
-            <nav className="flex flex-col space-y-4 pt-10">
+            <nav className="flex flex-col space-y-4 pt-8">
               <Link
                 href="/main/about"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-semibold text-gray-800"
                 onClick={() => setIsOpen(false)}
               >
                 About
               </Link>
-             
               <Link
                 href="/main/faq"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-semibold text-gray-800"
                 onClick={() => setIsOpen(false)}
               >
                 FAQ
               </Link>
               <Link
                 href="/main/reviews"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-semibold text-gray-800"
                 onClick={() => setIsOpen(false)}
               >
                 Reviews
               </Link>
-          
-              
-             <Link        href="/main/contact" className="bg-gray-900 text-center p-1 px-3 text-white font-semibold rounded-mid hover:bg-gray-800 " onClick={() => setIsOpen(false)}>
-                Get a Quote
+              <Link
+                href="/main/privacy"
+                className="text-sm font-semibold text-gray-800"
+                onClick={() => setIsOpen(false)}
+              >
+                Resources
               </Link>
+              <Link
+                href="/main/about"
+                className="text-sm font-semibold text-gray-800"
+                onClick={() => setIsOpen(false)}
+              >
+                Company
+              </Link>
+              <Link href="/main/contact" className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[#221c55] px-4 py-3 text-white font-semibold" onClick={() => setIsOpen(false)}>
+                Instant Price <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <div className="flex  w-fullflex-col items-center">
+                <a href="tel:+12126517273" className="inline-flex items-center w-full justify-center gap-2 rounded-md bg-[#221c55] px-4 py-3 text-white font-semibold" onClick={() => setIsOpen(false)}>
+                  <Phone className="h-4 w-4" /> (212) 651 7273
+                </a>
+                {/* <span className="mt-1 text-[10px] font-semibold text-gray-700">7 days a week 7AM-9PM</span> */}
+              </div>
+              
             </nav>
           </SheetContent>
         </Sheet>

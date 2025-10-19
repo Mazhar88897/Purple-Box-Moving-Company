@@ -8,10 +8,10 @@ export default function MediaReviews() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Left side - Title */}
           <div className="text-center md:text-left">
-            <h2 className="text-xl sm:text-xl font-extrabold text-[#9A4CB9] ">
+            <h2 className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 font-extrabold text-[#9A4CB9] ">
               Top rated UAE movers
             </h2>
-            <p className="text-xl sm:text-xl font-extrabold text-[#9A4CB9]">
+            <p className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 font-extrabold text-[#9A4CB9]">
               across ALL review sites
             </p>
           </div>

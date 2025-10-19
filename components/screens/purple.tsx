@@ -3,7 +3,7 @@ export default function Purple() {
     <section className="w-full bg-white py-14 px-4 md:px-6 lg:px-8 ">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-3xl font-extrabold leading-tight text-[#0c1241] sm:text-4xl mx-4">
-          Our simple COI process & steps
+          Our simple COI <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">process & steps</span>
         </h2>
       </div>
 
@@ -13,17 +13,17 @@ export default function Purple() {
         <div >
             <img src="/purple.png" alt="COI" className="w-full h-full object-cover" />
         </div>
-          <p className="mt-6 text-lg font-bold text-[#9A4CB9]">
+          <p className=" text-md font-bold text-[#9A4CB9]">
             Our straightforward COI process will ensure that come moving day, you
             have the correct and approved COI ready to go.
           </p>
-          <p className="mt-6 text-lg font-bold text-[#9A4CB9]">
+          <p className="mt-2 text-md font-bold text-[#9A4CB9]">
             Take a look at our guide, and for any other COI questions reach out
             to our specialist team.
           </p>
           <a
             href="mailto:coi@purplebox.com"
-            className="inline-block mt-8 text-md font-semibold text-[#9A4CB9] underline decoration-[#9A4CB9]/40 underline-offset-4 hover:text-[#9A4CB9]"
+            className="inline-block mt-2 text-md font-semibold text-[#9A4CB9] underline decoration-[#9A4CB9]/40 underline-offset-4 hover:text-[#9A4CB9]"
           >
             Ldc.co@mail.ru
           </a>

@@ -47,7 +47,7 @@ export default function AwardsSlider() {
   }
 
   return (
-    <div className="bg-[#9A4CB9] py-4 md:py-6 overflow-hidden">
+    <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 py-4 md:py-6 overflow-hidden">
       <div 
         ref={sliderRef}
         className="flex animate-scroll whitespace-nowrap cursor-grab active:cursor-grabbing"

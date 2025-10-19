@@ -35,17 +35,17 @@ function Component() {
     <div className="min-h-screen my-10 bg-white">
       <div className="px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-10 items-center">
-          <div className='max-w-xl w-full mx-auto md:mx-0'>
-            <div className="relative w-full">
-              <div className="relative z-10 overflow-hidden rounded-xl">
-                <img
-                  src="/purple5.jpg"
-                  alt="Team member working on laptop"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-4 -left-4 z-0 h-[92%] w-[92%] rounded-xl bg-purple-700" />
+          <div className='max-w-xl  mx-auto md:mx-0'>
+          <div className="relative max-w-5xl">
+            <div className="relative z-10 overflow-hidden rounded-xl">
+              <img
+                src="/pic2.png"
+                alt="Team member working on laptop"
+                className="h-full w-full object-cover"
+              />
             </div>
+            <div className="absolute -bottom-4 -left-4 z-0 h-[92%] w-[92%] rounded-xl bg-purple-700" />
+          </div>
           </div>
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">

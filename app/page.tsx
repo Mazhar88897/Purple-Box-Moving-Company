@@ -1,5 +1,6 @@
 "use client"
 import Navbar from "@/components/screens/Navbar"
+import AnnouncementStrip from "@/components/screens/AnnouncementStrip"
 import Hero from "@/components/screens/hero"
 import Footer from "@/components/screens/Footer"
 import Accords from "@/components/screens/Accords"
@@ -18,10 +19,17 @@ import Subfooter from "@/components/screens/subfooter"
 import Postfooter from "@/components/screens/postfooter"
 import MediaReviews from "@/components/screens/media"
 import AwardsSlider from "@/components/screens/slide"
+import PackingService from "@/components/screens/packingService"
+import ShiftingProcess from "@/components/screens/shiftingProcess"
+import Sections from "@/components/screens/sections"
+import Strip from "@/components/screens/strip"
+import Insta from "@/components/screens/insta"
+import SpecialService from "@/components/screens/special"
 
 export default function Home() {
   return (
     <main className="">
+      <AnnouncementStrip />
       <Navbar />
       <Hero />
       <MediaReviews />
@@ -93,8 +101,22 @@ export default function Home() {
       <>
       <Purple />
       </>
-   
 
+
+      <>
+      <PackingService  />
+      </>
+      <>
+      <Insta />
+      </>
+   
+   <>
+   <ShiftingProcess  />
+   </>
+
+<Sections />
+
+<Strip />    
 
 
 
@@ -120,6 +142,9 @@ export default function Home() {
 
       </>
 
+<>
+<SpecialService />    
+</>
 
 
 

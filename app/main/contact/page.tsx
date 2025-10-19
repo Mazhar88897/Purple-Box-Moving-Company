@@ -1,46 +1,69 @@
 "use client"
 import Heading from '@/components/screens/customHeading'
 import type React from "react"
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { initEmailJS, sendEmail, formatEmailData } from '@/lib/emailjs'
 
-type WizardData = {
-  // Step 3 (shown first)
-  pickupCityState: string
-  pickupZip: string
-  deliveryCityState: string
-  deliveryZip: string
-  // Step 2
+type QuoteFormData = {
+  // Moving Information
   moveDate: string
-  bedrooms: string
-  // Step 1 (shown last)
+  pickupTime: string
+  moveType: string
+  
+  // Storage Services
+  storageServices: string
+  
+  // Pickup Address
+  pickupAddress: string
+  pickupAccessType: string
+  pickupDoorman: boolean
+  pickupCOI: boolean
+  
+  // Dropoff Address
+  dropoffAddress: string
+  dropoffAccessType: string
+  dropoffDoorman: boolean
+  dropoffCOI: boolean
+  
+  // Personal Information
   firstName: string
   lastName: string
-  email: string
   phone: string
+  email: string
+  additionalInfo: string
+  
+  // Quote Options
+  inPersonQuote: string
+  hearAboutUs: string
 }
 
-const initialData: WizardData = {
-  pickupCityState: "",
-  pickupZip: "",
-  deliveryCityState: "",
-  deliveryZip: "",
+const initialData: QuoteFormData = {
   moveDate: "",
-  bedrooms: "1",
+  pickupTime: "",
+  moveType: "",
+  storageServices: "",
+  pickupAddress: "",
+  pickupAccessType: "",
+  pickupDoorman: false,
+  pickupCOI: false,
+  dropoffAddress: "",
+  dropoffAccessType: "",
+  dropoffDoorman: false,
+  dropoffCOI: false,
   firstName: "",
   lastName: "",
-  email: "",
   phone: "",
+  email: "",
+  additionalInfo: "",
+  inPersonQuote: "",
+  hearAboutUs: "",
 }
 
 const ContactPage = () => {
-  const [stepIndex, setStepIndex] = useState(0) // 0=>Step 1, 1=>Step 2, 2=>Step 3
-  const [formData, setFormData] = useState<WizardData>(initialData)
+  const [formData, setFormData] = useState<QuoteFormData>(initialData)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
-
-  const visualActiveStep = useMemo(() => [1, 2, 3][stepIndex], [stepIndex])
 
   // Initialize EmailJS on component mount
   useEffect(() => {
@@ -48,8 +71,13 @@ const ContactPage = () => {
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    const { name, value, type } = e.target
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked
+      setFormData((prev) => ({ ...prev, [name]: checked }))
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,11 +85,14 @@ const ContactPage = () => {
     setIsLoading(true)
 
     try {
-      // Validate all steps before submission
-      if (!validateStep1() || !validateStep2() || !validateStep3()) {
+      // Validate required fields
+      if (!formData.moveDate || !formData.pickupTime || !formData.moveType || 
+          !formData.storageServices || !formData.pickupAddress || !formData.dropoffAddress ||
+          !formData.firstName || !formData.lastName || !formData.phone || !formData.email ||
+          !formData.inPersonQuote || !formData.hearAboutUs) {
         await Swal.fire({
           title: 'Incomplete Form',
-          text: 'Please complete all steps before submitting. Make sure all required fields are filled.',
+          text: 'Please complete all required fields before submitting.',
           icon: 'warning',
           confirmButtonText: 'OK',
           confirmButtonColor: '#9A4CB9',
@@ -71,7 +102,28 @@ const ContactPage = () => {
       }
 
       // Format the form data for EmailJS template
-      const emailData = formatEmailData(formData)
+      const emailData = {
+        to_name: "Purple Box Moving",
+        from_name: `${formData.firstName} ${formData.lastName}`,
+        from_email: formData.email,
+        phone: formData.phone,
+        move_date: formData.moveDate,
+        pickup_time: formData.pickupTime,
+        move_type: formData.moveType,
+        storage_services: formData.storageServices,
+        pickup_address: formData.pickupAddress,
+        pickup_access: formData.pickupAccessType,
+        pickup_doorman: formData.pickupDoorman ? 'Yes' : 'No',
+        pickup_coi: formData.pickupCOI ? 'Yes' : 'No',
+        dropoff_address: formData.dropoffAddress,
+        dropoff_access: formData.dropoffAccessType,
+        dropoff_doorman: formData.dropoffDoorman ? 'Yes' : 'No',
+        dropoff_coi: formData.dropoffCOI ? 'Yes' : 'No',
+        additional_info: formData.additionalInfo,
+        in_person_quote: formData.inPersonQuote,
+        hear_about_us: formData.hearAboutUs,
+        message: `Moving Quote Request from ${formData.firstName} ${formData.lastName}`
+      }
       
       // Send email using EmailJS
       const result = await sendEmail(emailData)
@@ -79,7 +131,6 @@ const ContactPage = () => {
       if (result.success) {
         setShowSuccessModal(true)
         setFormData(initialData)
-        setStepIndex(0)
       } else {
         throw new Error(result.message || 'Failed to send email')
       }
@@ -96,429 +147,418 @@ const ContactPage = () => {
     }
   }
 
-  // Validation functions for each step
-  const validateStep1 = () => {
-    return formData.firstName.trim() !== '' && 
-           formData.lastName.trim() !== '' && 
-           formData.email.trim() !== '' && 
-           formData.phone.trim() !== ''
-  }
-
-  const validateStep2 = () => {
-    return formData.moveDate.trim() !== '' && 
-           formData.bedrooms.trim() !== ''
-  }
-
-  const validateStep3 = () => {
-    return formData.pickupCityState.trim() !== '' && 
-           formData.pickupZip.trim() !== '' && 
-           formData.deliveryCityState.trim() !== '' && 
-           formData.deliveryZip.trim() !== ''
-  }
-
-  const goNext = () => {
-    let isValid = false
-    
-    if (stepIndex === 0) {
-      isValid = validateStep1()
-      if (!isValid) {
-        Swal.fire({
-          title: 'Incomplete Step 1',
-          text: 'Please fill in all required fields: First Name, Last Name, Email, and Phone Number.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#9A4CB9',
-        })
-        return
-      }
-    } else if (stepIndex === 1) {
-      isValid = validateStep2()
-      if (!isValid) {
-        Swal.fire({
-          title: 'Incomplete Step 2',
-          text: 'Please fill in all required fields: Move Date and Bedrooms.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#9A4CB9',
-        })
-        return
-      }
-    }
-    
-    if (isValid) {
-      setStepIndex((s) => Math.min(2, s + 1))
-    }
-  }
-
-  const goPrev = () => setStepIndex((s) => Math.max(0, s - 1))
-
-  // Test email function
-  const handleTestEmail = async () => {
-    setIsLoading(true)
-    
-    try {
-      const testData = {
-        firstName: "John",
-        lastName: "Doe", 
-        email: "test@example.com",
-        phone: "+1234567890",
-        pickupCityState: "New York, NY",
-        pickupZip: "10001",
-        deliveryCityState: "Los Angeles, CA",
-        deliveryZip: "90210",
-        moveDate: "2024-02-15",
-        bedrooms: "2"
-      }
-
-      const emailData = formatEmailData(testData)
-      console.log('Sending test email with data:', emailData)
-      
-      const result = await sendEmail(emailData)
-      
-      if (result.success) {
-        await Swal.fire({
-          title: 'Test Email Sent!',
-          text: 'Test email sent successfully! Check your EmailJS dashboard for delivery status.',
-          icon: 'success',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#9A4CB9',
-        })
-      } else {
-        throw new Error(result.message)
-      }
-    } catch (error) {
-      await Swal.fire({
-        title: 'Test Failed!',
-        text: error instanceof Error ? error.message : 'Failed to send test email',
-        icon: 'error',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#9A4CB9',
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   return (
-    <div className="mt-4 sm:my-10 m-3  flex flex-col items-center justify-center">
-      <Heading
-        color="black"
-        heading1="Get A "
-        heading2="Free Quote"
-        subheading="Complete these 3 quick steps to request your free quote."
-        
-      />
-      <div className='max-w-3xl mx-auto my-12'>
-<div className="grid items-center gap-10 md:grid-cols-2">
-          <div className="relative w-full">
-            <div className="relative z-10 overflow-hidden rounded-xl">
-              <img
-                src="/purple5.jpg"
-                alt="Team member working on laptop"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-4 -left-4 z-0 h-[92%] w-[92%] rounded-xl bg-purple-700" />
-          </div>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Header */}
+        <div className=" mb-8">
+          <h1 className="text-3xl  font-bold text-gray-900 mb-4">
+            Your piece of cake move starts with a{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">fast free quote</span>
+          </h1>
+          <p className="text-sm text-gray-600 max-w-3xl ">
+            Add your rooms & items to receive an obligation-free moving quote with a guaranteed flat-fee cost.
+          </p>
+        </div>
 
-          <div>
-            <h2 className="text-lg font-extrabold leading-tight text-[#0c1241] ">
-              We Handle All Your Moving COI Needs
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Moving Information Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Your Moving Information <span className="text-red-500">*</span>
             </h2>
-            <div className="mt-5 space-y-4  text-sm leading-7 text-slate-600">
-              <p>
-                At <span className="font-semibold">Purple Box Moving Company</span>, we know UAE moves—especially in
-                apartments, offices, and towers—come with strict building rules. We handle all
-                <span className="font-semibold"> COI </span>requirements for you so your move stays smooth, compliant, and
-                stress‑free.
-              </p>
-              <p>
-                As a <span className="font-semibold">fully insured</span> mover, we routinely coordinate COIs for homes and
-                offices. Complex access or insurance policies? We manage the paperwork quickly
-                and correctly.
-              </p>
-             
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="w-full mb-24  mt-5  border-black border-2 my-4 rounded-mid max-w-3xl ">
-        <div className="bg-white max-w-3xl rounded-mid p-8">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-xl font-bold mb-1">
-                <span className="text-black">Step-by-step</span> <span className="text-[#9A4CB9]">Form</span>
-              </h2>
-              <p className="text-sm font-semibold">Fill out Step 1, then Step 2, and finally Step 3.</p>
-            </div>
-            <div className="flex-shrink-0">
-              <img 
-                src="/purple.png" 
-                alt="Purple Box Moving Company" 
-                className="w-24 h-24 sm:w-32 sm:h-32 object-contain"
-              />
-            </div>
-          </div>
-
-          {/* Top step indicator with connectors */}
-          <div className="mb-8">
-            <div className="flex items-center">
-              {/* Step 1 */}
-              <div className="flex flex-col items-center">
-                <div className={`flex items-center justify-center h-9 w-9 rounded-full border-2 ${visualActiveStep === 1 ? 'bg-[#9A4CB9] border-[#9A4CB9] text-white' : 'border-slate-400 text-slate-700'}`}>1</div>
-              </div>
-              {/* Connector 1-2 */}
-              <div className={`flex-1 h-[2px] mx-4 ${stepIndex >= 1 ? 'bg-[#e5d6f0]' : 'bg-slate-300'}`}></div>
-              {/* Step 2 */}
-              <div className="flex flex-col items-center">
-                <div className={`flex items-center justify-center h-9 w-9 rounded-full border-2 ${visualActiveStep === 2 ? 'bg-[#9A4CB9] border-[#9A4CB9] text-white' : 'border-slate-400 text-slate-700'}`}>2</div>
-              </div>
-              {/* Connector 2-3 */}
-              <div className={`flex-1 h-[2px] mx-4 ${stepIndex >= 2 ? 'bg-[#e5d6f0]' : 'bg-slate-300'}`}></div>
-              {/* Step 3 */}
-              <div className="flex flex-col items-center">
-                <div className={`flex items-center justify-center h-9 w-9 rounded-full border-2 ${visualActiveStep === 3 ? 'bg-[#9A4CB9] border-[#9A4CB9] text-white' : 'border-slate-400 text-slate-700'}`}>3</div>
-              </div>
-            </div>
-            <div className="flex justify-between mt-2 text-xs font-bold tracking-wide text-slate-700">
-              <div>STEP ONE</div>
-              <div>STEP TWO</div>
-              <div>STEP THREE</div>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit}>
-            {/* STEP 1: Personal Info */}
-            {stepIndex === 0 && (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">First Name <span className="text-red-600">*</span></label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="Enter Your First Name"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.firstName.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Last Name <span className="text-red-600">*</span></label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Enter Your Last Name"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.lastName.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Email Address <span className="text-red-600">*</span></label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter Your Email Address"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.email.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium mb-1">Phone Number <span className="text-red-600">*</span></label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Enter Your Phone Number"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.phone.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* STEP 2: Date & Bedrooms */}
-            {stepIndex === 1 && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">When are you moving? <span className="text-red-600">*</span></label>
-                  <input
-                    type="date"
-                    name="moveDate"
-                    value={formData.moveDate}
-                    onChange={handleChange}
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.moveDate.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium mb-1">How many bedrooms are you moving?</label>
-                  <select
-                    name="bedrooms"
-                    value={formData.bedrooms}
-                    onChange={handleChange}
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.bedrooms.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    disabled={isLoading}
-                  >
-                    {['1','2','3','4','5','6+'].map((b) => (
-                      <option key={b} value={b}>{b}</option>
-                    ))}
-                  </select>
-                </div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Estimated move date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="moveDate"
+                  value={formData.moveDate}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
               </div>
-            )}
-
-            {/* STEP 3: Pickup/Delivery */}
-            {stepIndex === 2 && (
               <div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Pick up Zip Code or City, State <span className="text-red-600">*</span></label>
-                  <input
-                    type="text"
-                    name="pickupCityState"
-                    value={formData.pickupCityState}
-                    onChange={handleChange}
-                    placeholder="Knoxville, TN, USA"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.pickupCityState.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    name="pickupZip"
-                    value={formData.pickupZip}
-                    onChange={handleChange}
-                    placeholder="37902"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.pickupZip.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Delivery Zip Code or City, State <span className="text-red-600">*</span></label>
-                  <input
-                    type="text"
-                    name="deliveryCityState"
-                    value={formData.deliveryCityState}
-                    onChange={handleChange}
-                    placeholder="Kent, WA, USA"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.deliveryCityState.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="mb-6">
-                  <input
-                    type="text"
-                    name="deliveryZip"
-                    value={formData.deliveryZip}
-                    onChange={handleChange}
-                    placeholder="98032"
-                    className={`w-full p-3 border rounded focus:outline-none focus:ring-1 focus:ring-[#9A4CB9] ${
-                      formData.deliveryZip.trim() === '' ? 'border-red-500' : 'border-slate-950'
-                    }`}
-                    required
-                    disabled={isLoading}
-                  />
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Preferred pick up time <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="pickupTime"
+                  value={formData.pickupTime}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                >
+                  <option value="">Choose an option</option>
+                  <option value="morning">Morning (8AM-12PM)</option>
+                  <option value="afternoon">Afternoon (12PM-4PM)</option>
+                  <option value="evening">Evening (4PM-8PM)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Type of move <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="moveType"
+                  value={formData.moveType}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                >
+                  <option value="">Choose an option</option>
+                  <option value="local">Local Move</option>
+                  <option value="long-distance">Long Distance</option>
+                  <option value="international">International</option>
+                  <option value="office">Office Move</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Storage Services Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Do you require Piece of Cake storage services? <span className="text-red-500">*</span>
+            </h2>
+            <div className="flex space-x-6">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="storageServices"
+                  value="yes"
+                  checked={formData.storageServices === "yes"}
+                  onChange={handleChange}
+                  className="mr-2"
+                  required
+                />
+                <span className="text-gray-700">Yes</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="storageServices"
+                  value="no"
+                  checked={formData.storageServices === "no"}
+                  onChange={handleChange}
+                  className="mr-2"
+                  required
+                />
+                <span className="text-gray-700">No</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Pickup Address Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Pick Up address <span className="text-red-500">*</span>
+            </h2>
+            <p className="text-sm text-gray-500 mb-4">
+              *Please include the zip code when providing address.
+            </p>
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  name="pickupAddress"
+                  value={formData.pickupAddress}
+                  onChange={handleChange}
+                  placeholder="Enter pickup address"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Type of access:
+                </label>
+                <select
+                  name="pickupAccessType"
+                  value={formData.pickupAccessType}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Choose an option</option>
+                  <option value="ground-floor">Ground Floor</option>
+                  <option value="elevator">Elevator Access</option>
+                  <option value="stairs">Stairs Only</option>
+                  <option value="narrow-access">Narrow Access</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Optional location details:
+                </label>
+                <div className="flex space-x-6">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="pickupDoorman"
+                      checked={formData.pickupDoorman}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Doorman</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="pickupCOI"
+                      checked={formData.pickupCOI}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">COI</span>
+                  </label>
                 </div>
               </div>
-            )}
-
-            {/* Navigation Buttons */}
-            <div className="flex items-center gap-4 mt-2">
-              <button
-                type="button"
-                onClick={goPrev}
-                className="bg-black text-white font-medium py-2 px-6 rounded disabled:opacity-50"
-                disabled={isLoading || stepIndex === 0}
-              >
-                Previous
-              </button>
-              {stepIndex < 2 ? (
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="bg-[#9A4CB9] hover:bg-[#9A4CB9] text-white font-medium py-2 px-6 rounded disabled:opacity-50"
-                  disabled={isLoading}
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="bg-[#9A4CB9] hover:bg-[#9A4CB9] text-white font-medium py-2 px-6 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Submitting...' : 'Submit For A Free Estimate'}
-                </button>
-              )}
             </div>
-          </form>
-        </div>
-      </div>
-
-      {/* Custom Success Modal */}
-      {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl">
-            {/* Image */}
-            <div className="mb-6">
-              <img 
-                src="/purple.png" 
-                alt="Purple Box Moving Company" 
-                className="w-32 h-32 mx-auto object-contain rounded-lg"
-              />
-            </div>
-            
-            {/* Success Message */}
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-[#9A4CB9] mb-4">Success!</h2>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                Your request has been submitted successfully! We will contact you soon.
-              </p>
-            </div>
-            
-            {/* Close Button */}
-            <button
-              onClick={() => setShowSuccessModal(false)}
-              className="bg-[#9A4CB9] hover:bg-[#8A3BA9] text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-            >
-              Great!
-            </button>
           </div>
-        </div>
-      )}
+
+          {/* Dropoff Address Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Drop Off address <span className="text-red-500">*</span>
+            </h2>
+            <p className="text-sm text-gray-500 mb-4">
+              *Please include the zip code when providing address.
+            </p>
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  name="dropoffAddress"
+                  value={formData.dropoffAddress}
+                  onChange={handleChange}
+                  placeholder="Enter dropoff address"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Type of access:
+                </label>
+                <select
+                  name="dropoffAccessType"
+                  value={formData.dropoffAccessType}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Choose an option</option>
+                  <option value="ground-floor">Ground Floor</option>
+                  <option value="elevator">Elevator Access</option>
+                  <option value="stairs">Stairs Only</option>
+                  <option value="narrow-access">Narrow Access</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Optional location details:
+                </label>
+                <div className="flex space-x-6">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="dropoffDoorman"
+                      checked={formData.dropoffDoorman}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Doorman</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="dropoffCOI"
+                      checked={formData.dropoffCOI}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">COI</span>
+                  </label>
+                </div>
+              </div>
+              <div className="flex items-center text-pink-600 cursor-pointer">
+                <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center mr-2">
+                  <span className="text-white text-lg">+</span>
+                </div>
+                <span>Add stops if it's necessary</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Personal Information and Quote Options */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Personal Information */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                  Personal information
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      First Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      placeholder="First name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Last Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      placeholder="Last name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Enter phone number"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Any additional information you would like to share about your move?
+                    </label>
+                    <textarea
+                      name="additionalInfo"
+                      value={formData.additionalInfo}
+                      onChange={handleChange}
+                      rows={3}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Quote Options */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                  Quote Options
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Are you interested in our free in-person quote?
+                    </label>
+                    <p className="text-sm text-gray-500 mb-3">
+                      We will come to your home and price your quote in-person. Only 2+ bedrooms & larger size moves qualify. *
+                    </p>
+                    <div className="flex space-x-6">
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name="inPersonQuote"
+                          value="yes"
+                          checked={formData.inPersonQuote === "yes"}
+                          onChange={handleChange}
+                          className="mr-2"
+                          required
+                        />
+                        <span className="text-gray-700">Yes</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name="inPersonQuote"
+                          value="no"
+                          checked={formData.inPersonQuote === "no"}
+                          onChange={handleChange}
+                          className="mr-2"
+                          required
+                        />
+                        <span className="text-gray-700">No</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      How did you hear about Piece of Cake? <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      name="hearAboutUs"
+                      value={formData.hearAboutUs}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                    >
+                      <option value="">Choose an option</option>
+                      <option value="google">Google Search</option>
+                      <option value="facebook">Facebook</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="referral">Referral</option>
+                      <option value="yelp">Yelp</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div className="mt-6">
+                    <p className="text-sm text-gray-600 mb-4">
+                      You have the option to provide us with the list of your items & rooms, or submit now and we will call you back to collect your inventory details.
+                    </p>
+                    <div className="space-y-3">
+                      <button
+                        type="button"
+                        className="w-full bg-gray-200 text-gray-800 py-3 px-4 rounded-md hover:bg-gray-300 transition-colors"
+                      >
+                        Add items for instant pricing
+                      </button>
+                      <div className="text-center text-sm text-gray-500">or</div>
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-gray-200 text-gray-800 py-3 px-4 rounded-md hover:bg-gray-300 transition-colors disabled:opacity-50"
+                      >
+                        {isLoading ? "Submitting..." : "Submit now & we will get in touch"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

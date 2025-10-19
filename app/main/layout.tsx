@@ -1,5 +1,6 @@
 import Footer from '@/components/screens/Footer'
 import Navbar from '@/components/screens/Navbar'
+import AnnouncementStrip from '@/components/screens/AnnouncementStrip'
 import React, { Children } from 'react'
 
 const layout = ({
@@ -8,7 +9,12 @@ const layout = ({
     children: React.ReactNode
   }) => {
   return (
-    <><Navbar /><div>{children}</div><Footer /></>
+    <>
+      <AnnouncementStrip />
+      <Navbar />
+      <div>{children}</div>
+      <Footer />
+    </>
   )
 }
 

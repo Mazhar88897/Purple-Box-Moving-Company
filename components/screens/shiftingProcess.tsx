@@ -33,16 +33,7 @@ export default function COIFAQ() {
       description:
         "In most cases, we issue and deliver your COI within 24 hours after we receive the required details from building management.",
     },
-    {
-      title: "Q6. What if my building has special COI requirements?",
-      description:
-        "No problem. Send us the sample or specific wording—our specialists match requirements exactly.",
-    },
-    {
-      title: "Q7. Who should I contact for COI assistance?",
-      description:
-        "Contact our COI Support Team at +971 50 979 0305 or via our website contact form. We’ll process everything quickly to keep your move on schedule.",
-    },
+   
   ]
 
   const toggleAccordion = (index: number) => {
@@ -56,7 +47,7 @@ export default function COIFAQ() {
         <div className="grid items-center gap-10 md:grid-cols-2">
         <div className="z-10">
             <h2 className="text-3xl font-extrabold leading-tight text-[#0c1241] sm:text-4xl">
-Frequently <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Asked Questions</span> About Certificate of Insurance (COI)
+            Our flat fee pricing means no hidden surprises, ever.
             </h2>
             {/* <div className="mt-5 space-y-4 text-[15px] text-xs leading-7 text-slate-600">
               <p>
@@ -77,10 +68,10 @@ Frequently <span className="text-transparent bg-clip-text bg-gradient-to-r from-
               </p>
             </div> */}
           </div>
-          <div className="relative w-full md:w-3/4  md:-translate-x-[20%]">
+          <div className="relative w-full md:w-3/4 =">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/pic3.png"
+                src="/pic4.png"
                 alt="Team member working on laptop"
                 className="h-full w-full object-cover"
               />
@@ -95,7 +86,15 @@ Frequently <span className="text-transparent bg-clip-text bg-gradient-to-r from-
        
 
         {/* FAQ list */}
-        <div className="my-20 space-y-4">
+
+    <div     className="grid items-center gap-10 md:grid-cols-3 mt-10">
+        <div className="md:col-span-1">
+            <h2 className="text-2xl font-semibold leading-tight text-purple-700">
+            We offer a guaranteed, all-inclusive flat fee, locked in before your move day. Which means the duration of your move will not impact your move price. We always include the following services at no extra charge to you.
+            </h2>
+        </div>
+        
+        <div className="my-20 md:col-span-2 space-y-4">
           {faqs.map((faq, index) => (
             <div key={index}>
               <button
@@ -120,6 +119,7 @@ Frequently <span className="text-transparent bg-clip-text bg-gradient-to-r from-
           ))}
         </div>
       </div>
+    </div>
     </section>
   )
 }

@@ -2,6 +2,7 @@
 import Heading from '@/components/screens/customHeading'
 import Testimonials from '@/components/screens/owner'
 import Subfooter from '@/components/screens/subfooter'
+import ReviewsGrid from '@/components/screens/reviewsGrid'
 import React from 'react'
 
 const page = () => {
@@ -15,7 +16,7 @@ const page = () => {
              subheading="A Few Kind Words from Our Valued Clients"
            />
            <div className='my-10'>
-           <Testimonials /> 
+           <ReviewsGrid /> 
 
            </div>
 
@@ -23,6 +24,6 @@ const page = () => {
     <Subfooter />
     </>
   )
-}
+} 
 
 export default page

@@ -9,7 +9,7 @@ const Description = () => {
           <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/purple5.jpg"
+                src="/pic1.png"
                 alt="Team member working on laptop"
                 className="h-full w-full object-cover"
               />
@@ -19,7 +19,7 @@ const Description = () => {
 
           <div>
             <h2 className="text-3xl font-extrabold leading-tight text-[#0c1241] sm:text-4xl">
-              We Handle All Your Moving COI Needs
+              We Handle All Your Moving <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">COI Needs</span>
             </h2>
             <div className="mt-5 space-y-4 text-[15px] text-xs leading-7 text-slate-600">
               <p>
@@ -46,7 +46,7 @@ const Description = () => {
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div>
             <h3 className="text-2xl font-extrabold leading-tight text-[#0c1241] sm:text-3xl">
-              What is a Certificate of Insurance (COI) and Why It Matters
+              What is a <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Certificate of Insurance (COI)</span> and Why It Matters
             </h3>
             <div className="mt-5 space-y-4 text-[15px] leading-7 text-slate-600">
               <p>
@@ -68,7 +68,7 @@ const Description = () => {
            <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/purple 4.jpg"
+                src="/pic2.png"
                 alt="Team member working on laptop"
                 className="h-full w-full object-cover"
               />
