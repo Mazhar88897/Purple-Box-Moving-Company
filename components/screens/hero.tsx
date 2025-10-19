@@ -21,7 +21,7 @@ const Hero = () => {
           {/* Left Side - Visual Content with Moving Boxes */}
           <div className="relative order-2 lg:order-1">
             <div className="relative">
-              <img src="/hero.png" alt="moving background" className="w-full h-full object-cover rounded-lg" />
+              <img src="/hero2.png" alt="moving background" className="w-full h-full object-cover rounded-lg" />
               
               {/* Decorative Elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
