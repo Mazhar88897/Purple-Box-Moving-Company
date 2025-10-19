@@ -387,7 +387,7 @@ const ContactPage = () => {
                 <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center mr-2">
                   <span className="text-white text-lg">+</span>
                 </div>
-                <span>Add stops if it's necessary</span>
+                <span>Add stops if it is necessary</span>
               </div>
             </div>
           </div>
