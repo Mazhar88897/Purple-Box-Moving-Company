@@ -17,7 +17,7 @@ const reviews = [
     location: "New York",
     rating: 5,
     source: "Yelp",
-    text: " Purple Box Moving Company moved me from the Financial District to the Hudson Valley in June 2022. It was absolutely flawless. The two men that worked the moved were polite, careful, efficient and knowledgeable. Not a scratch on anything including the brand new apartment I moved into. They were focused and diligent. In Manhattan the logistics are more complicated yet Piece of Cake rose to the occasion in every way. What's more, the moving fee was very reasonable and there were no hidden charges, no surprises.",
+    text: " Purple Box Moving Company moved me from the Financial District to the Hudson Valley in June 2022. It was absolutely flawless. The two men that worked the moved were polite, careful, efficient and knowledgeable. Not a scratch on anything including the brand new apartment I moved into. They were focused and diligent. In Manhattan the logistics are more complicated yet purple box moving rose to the occasion in every way. What's more, the moving fee was very reasonable and there were no hidden charges, no surprises.",
     borderColor: "border-blue-900"
   },
   {
@@ -26,7 +26,7 @@ const reviews = [
     location: "New York",
     rating: 5,
     source: "Google",
-    text: "Great move with Purple Box Moving Company movers! I rented their pink bins which was an excellent choice, they provide plenty of packing paper, zip ties, and tags. My team arrived right at the start of their arrival window and quickly and safely packed all my bins and furniture into their truck. The team just as efficiently unloaded everything, leaving the bins in the labeled rooms and re assembling my bed frame. I definitely recommend renting their bins. I would definitely use Piece of Cake movers again and recommend them to a friend.",
+    text: "Great move with Purple Box Moving Company movers! I rented their pink bins which was an excellent choice, they provide plenty of packing paper, zip ties, and tags. My team arrived right at the start of their arrival window and quickly and safely packed all my bins and furniture into their truck. The team just as efficiently unloaded everything, leaving the bins in the labeled rooms and re assembling my bed frame. I definitely recommend renting their bins. I would definitely use purple box moving movers again and recommend them to a friend.",
     borderColor: "border-blue-900"
   },
   {
@@ -35,7 +35,7 @@ const reviews = [
     location: "New York to Maryland",
     rating: 5,
     source: "Google",
-    text: "Easiest moving experience ever. I had packed all my boxes myself, and the two guys came and loaded everything in 45 or so minutes. They wrapped my paintings and all of my fragile items and desk that I forgot to include in my inventory. The guys were very efficient, polite, and professional. They drove my belongings from NYC to Maryland and unpacked everything, and my parents had only good things to say of their experience with them as well. I will recommend Piece of Cake moving to friends & family!",
+    text: "Easiest moving experience ever. I had packed all my boxes myself, and the two guys came and loaded everything in 45 or so minutes. They wrapped my paintings and all of my fragile items and desk that I forgot to include in my inventory. The guys were very efficient, polite, and professional. They drove my belongings from NYC to Maryland and unpacked everything, and my parents had only good things to say of their experience with them as well. I will recommend purple box moving moving to friends & family!",
     borderColor: "border-pink-500"
   }
 ]

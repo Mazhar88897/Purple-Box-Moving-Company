@@ -143,7 +143,7 @@ export default function AdjustMultiplierModal({
         >
           <X size={24} />
         </button>
-        <h2 className="text-[#9A4CB9] text-xl font-bold mb-4">Area Clearance (Pocket):</h2>
+        <h2 className="text-[#9A4CB9] text-xl font-bold mb-4">Area Clearance (Purple box movingket):</h2>
 
         <p className="text-sm mb-4">
           By increasing or decreasing this number, you can tune the settings to your machine.

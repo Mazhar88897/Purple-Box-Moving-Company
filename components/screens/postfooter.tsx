@@ -11,7 +11,7 @@ export default function postfooter() {
               <img src="/box.png" alt="Company truck" className="w-full h-auto object-contain" />
             </div>
             <p className="mt-4 text-sm text-white/80">
-              © 2025 Piece of Cake Moving & Storage.
+              © 2025 purple box moving Moving & Storage.
               <br />
               All Rights Reserved.
             </p>

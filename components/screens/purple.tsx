@@ -77,7 +77,7 @@ export default function Purple() {
             <p className="text-[#0c1241]/90">
             <span className="text-[#9A4CB9] text-md font-bold">5.</span> Your approved COI will insure you for any accidental building
               damage that may occur in your move, which means you are not out of
-              pocket if that happens.
+              Purple box movingket if that happens.
             </p>
        
         {/* </ol> */}

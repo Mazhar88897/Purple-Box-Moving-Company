@@ -29,7 +29,7 @@ import SpecialService from "@/components/screens/special"
 export default function Home() {
   return (
     <main className="">
-      <AnnouncementStrip />
+      {/* <AnnouncementStrip /> */}
       <Navbar />
       <Hero />
       <MediaReviews />

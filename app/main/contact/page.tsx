@@ -153,7 +153,7 @@ const ContactPage = () => {
         {/* Header */}
         <div className=" mb-8">
           <h1 className="text-3xl  font-bold text-gray-900 mb-4">
-            Your piece of cake move starts with a{" "}
+            Your purple box moving move starts with a{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">fast free quote</span>
           </h1>
           <p className="text-sm text-gray-600 max-w-3xl ">
@@ -222,7 +222,7 @@ const ContactPage = () => {
           {/* Storage Services Section */}
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Do you require Piece of Cake storage services? <span className="text-red-500">*</span>
+              Do you require purple box moving storage services? <span className="text-red-500">*</span>
             </h2>
             <div className="flex space-x-6">
               <label className="flex items-center">
@@ -514,7 +514,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      How did you hear about Piece of Cake? <span className="text-red-500">*</span>
+                      How did you hear about purple box moving? <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="hearAboutUs"
