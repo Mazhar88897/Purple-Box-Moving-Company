@@ -116,7 +116,10 @@ export default function Home() {
 
 <Sections />
 
-<Strip />    
+<div className="hidden md:block">
+<Strip />  
+</div>
+  
 
 
 

@@ -76,7 +76,7 @@ const ContactPage = () => {
       const checked = (e.target as HTMLInputElement).checked
       setFormData((prev) => ({ ...prev, [name]: checked }))
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
     }
   }
 
@@ -467,16 +467,16 @@ const ContactPage = () => {
                       onChange={handleChange}
                       rows={3}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                  </div>
+              />
+            </div>
                 </div>
-              </div>
+          </div>
 
               {/* Quote Options */}
-              <div>
+          <div>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
                   Quote Options
-                </h2>
+            </h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -553,10 +553,10 @@ const ContactPage = () => {
                       </button>
                     </div>
                   </div>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
+      </div>
         </form>
       </div>
     </div>
