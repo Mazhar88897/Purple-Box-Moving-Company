@@ -95,7 +95,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
         value={value}
         onChange={handleInputChange}
         onFocus={handleFocus}
-        className={`w-[400px] text-xs text-black bg-white rounded-lg p-2 py-3 border-t-2 border-b-2 border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent ${className}`}
+        className={`w-[300px] sm:w-[400px] text-xs text-black bg-white rounded-lg p-2 py-3 border-t-2 border-b-2 border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent ${className}`}
       />
       
       {isOpen && filteredOptions.length > 0 && (
