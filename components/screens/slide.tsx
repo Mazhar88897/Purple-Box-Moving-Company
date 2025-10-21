@@ -67,7 +67,7 @@ export default function AwardsSlider() {
             <div className="text-white px-2 md:px-4 py-1 md:py-2 rounded-lg font-bold text-xs md:text-sm">
               INC.5000
             </div>
-            <span className="font-bold text-sm md:text-lg">&ldquo;UAE&rsquo;s Fastest Growing Mover&rdquo;</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;NYC&rsquo;s Fastest Growing Mover&rdquo;</span>
           </div>
 
           {/* Award 2 - Forbes */}
@@ -127,7 +127,7 @@ export default function AwardsSlider() {
             <div className="text-white px-2 md:px-4 py-1 md:py-2 rounded-lg font-bold text-xs md:text-sm">
               INC.5000
             </div>
-            <span className="font-bold text-sm md:text-lg">&ldquo;UAE&rsquo;s Fastest Growing Mover&rdquo;</span>
+            <span className="font-bold text-sm md:text-lg">&ldquo;NYC&rsquo;s Fastest Growing Mover&rdquo;</span>
           </div>
 
           {/* Award 2 - Forbes */}

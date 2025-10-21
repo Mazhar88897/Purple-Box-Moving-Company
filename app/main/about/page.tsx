@@ -52,7 +52,7 @@ function Component() {
               Welcome to <span style={{ color: "#9A4CB9" }}>Purple Box Moving Company</span>
             </h1>
             <p className="font-semibold leading-relaxed text-slate-700 mb-6">
-              We just launched to make moving simple, safe, and stress‑free across the UAE. From fast quotes to
+              We just launched to make moving simple, safe, and stress‑free across the NYC. From fast quotes to
               professional packing and careful delivery, our friendly team treats your belongings like their own.
             </p>
             <Link

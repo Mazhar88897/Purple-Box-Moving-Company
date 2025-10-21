@@ -5,9 +5,9 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Purple Box Moving Company - Professional Moving Services in UAE',
-  description: 'Purple Box Moving Company provides professional moving and packing services in the UAE. Fast quotes, secure packing, COI handling, and reliable local & commercial moves.',
-  keywords: ['Moving Company', 'Packing Services', 'UAE Moving', 'COI Certificate', 'Professional Movers', 'Local Moving', 'Commercial Moving', 'Dubai Movers', 'Abu Dhabi Movers'],
+  title: 'Purple Box Moving Company - Professional Moving Services in NYC',
+  description: 'Purple Box Moving Company provides professional moving and packing services in the NYC. Fast quotes, secure packing, COI handling, and reliable local & commercial moves.',
+  keywords: ['Moving Company', 'Packing Services', 'NYC Moving', 'COI Certificate', 'Professional Movers', 'Local Moving', 'Commercial Moving', 'Dubai Movers', 'Abu Dhabi Movers'],
   authors: [{ name: 'Purple Box Moving Company', url: 'https://purpleboxmovers.com' }],
   creator: 'Purple Box Moving Company',
   publisher: 'Purple Box Moving Company',

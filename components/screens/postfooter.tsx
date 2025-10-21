@@ -38,7 +38,7 @@ export default function postfooter() {
                 {/* phone icon */}
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" className="text-white/90 shrink-0"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.11.37 2.31.57 3.58.57a1 1 0 0 1 1 1V21a1 1 0 0 1-1 1C11.85 22 2 12.15 2 1a1 1 0 0 1 1-1h4.5a1 1 0 0 1 1 1c0 1.27.2 2.47.57 3.58a1 1 0 0 1-.24 1.01l-2.21 2.2Z"/></svg>
                 <Link href="tel:+12126517273" className="text-sm md:text-base hover:underline">
-                  (212) 651 7273
+                 +1 (332)2835813‬
                 </Link>
               </li>
               <li className="flex items-center gap-3">

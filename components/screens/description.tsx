@@ -23,7 +23,7 @@ const Description = () => {
             </h2>
             <div className="mt-5 space-y-4 text-[15px] text-xs leading-7 text-slate-600">
               <p>
-                At <span className="font-semibold">Purple Box Moving Company</span>, we know UAE moves—especially in
+                At <span className="font-semibold">Purple Box Moving Company</span>, we know NYC moves—especially in
                 apartments, offices, and towers—come with strict building rules. We handle all
                 <span className="font-semibold"> COI </span>requirements for you so your move stays smooth, compliant, and
                 stress‑free.

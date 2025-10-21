@@ -1,11 +1,33 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowRightToLine, ArrowUpRight, Phone } from 'lucide-react'
+import Autocomplete from '@/components/ui/autocomplete'
+import { getAllCityOptions, CityOption } from '@/lib/cityData'
 
 const Hero = () => {
+  const [fromAddress, setFromAddress] = useState('')
+  const [toAddress, setToAddress] = useState('')
+  const cityOptions = getAllCityOptions()
+
+  const handleFromAddressChange = (value: string) => {
+    setFromAddress(value)
+  }
+
+  const handleToAddressChange = (value: string) => {
+    setToAddress(value)
+  }
+
+  const handleFromAddressSelect = (option: CityOption) => {
+    setFromAddress(option.fullAddress)
+  }
+
+  const handleToAddressSelect = (option: CityOption) => {
+    setToAddress(option.fullAddress)
+  }
+
   return (
     <div className="relative w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 overflow-hidden min-h-screen">
       {/* Background Pattern */}
@@ -21,7 +43,7 @@ const Hero = () => {
           {/* Left Side - Visual Content with Moving Boxes */}
           <div className="relative order-2 lg:order-1">
             <div className="relative">
-              <img src="/hero2.png" alt="moving background" className="w-full h-full object-cover rounded-lg" />
+              <img src="/bgbg.png" alt="moving background" className="w-full h-full object-cover rounded-lg" />
               
               {/* Decorative Elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
@@ -34,26 +56,30 @@ const Hero = () => {
             <div className="max-w-lg mx-auto lg:mx-0">
               {/* Main Headline */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                The best movers in NYC with <span className="text-[#221c55]">the best reviews</span>.
+              The best movers in NYC with the <span className="text-[#221c55]">best reviews</span>.
               </h1>
               
-              <p className="text-lg   text-purple-950 font-bold">Affordable moving & storage services.</p>
+              <p className="text-lg   text-purple-950 font-bold">Five-star moving made simple with Purple Box. Trusted by New Yorkers. Powered by Purple.</p>
               <p className="text-lg  text-white/90 mb-8 font-medium">
-                Affordable moving & storage services. Guaranteed all-inclusive quote within minutes.
-              </p>
+              Reliable moving & storage at prices you’ll love.
+              Get your guaranteed all-inclusive quote in minutes.   </p>
 
               {/* Form Fields */}
               <div className="space-y-4 mb-8">
-                <input 
-                  type="text" 
-                  placeholder="Moving from address" 
-                  className="w-[400px] text-xs text-black bg-white rounded-lg p-2 py-3 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent"
+                <Autocomplete
+                  placeholder="Moving from address"
+                  value={fromAddress}
+                  onChange={handleFromAddressChange}
+                  onSelect={handleFromAddressSelect}
+                  options={cityOptions}
                 />
-                <input 
-                  type="text" 
-                  placeholder="Moving to address" 
-                  className="w-[400px] text-xs text-black bg-white rounded-lg p-2 py-3 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-transparent"
-                  />
+                <Autocomplete
+                  placeholder="Moving to address"
+                  value={toAddress}
+                  onChange={handleToAddressChange}
+                  onSelect={handleToAddressSelect}
+                  options={cityOptions}
+                />
               </div>
 
               {/* CTA Buttons */}

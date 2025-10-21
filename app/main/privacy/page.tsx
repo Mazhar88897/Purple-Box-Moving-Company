@@ -81,7 +81,7 @@ function Component() {
               <li>To communicate with you about your move, including updates and confirmations.</li>
               <li>To provide customer support and address any concerns or special requirements.</li>
               <li>To improve our services and develop new offerings for our customers.</li>
-              <li>To comply with legal and regulatory requirements in the UAE.</li>
+              <li>To comply with legal and regulatory requirements in the NYC.</li>
             </ul>
           </section>
 
@@ -94,7 +94,7 @@ function Component() {
             <ul className="list-disc ml-6 space-y-2 mb-4">
               <li><strong>Contract Performance:</strong> To fulfill our moving service agreements with you.</li>
               <li><strong>Legitimate Interest:</strong> To provide customer support and improve our services.</li>
-              <li><strong>Legal Obligation:</strong> To comply with UAE regulations and COI requirements.</li>
+              <li><strong>Legal Obligation:</strong> To comply with NYC regulations and COI requirements.</li>
               <li><strong>Consent:</strong> For marketing communications (where applicable).</li>
             </ul>
             <p>
@@ -114,7 +114,7 @@ function Component() {
             <ul className="list-disc ml-6 space-y-2 mb-4">
               <li><strong>Building Management:</strong> To obtain COI (Certificate of Insurance) requirements for your move.</li>
               <li><strong>Service Providers:</strong> With trusted partners who assist in providing moving services (packing materials suppliers, insurance providers, etc.).</li>
-              <li><strong>Legal Requirements:</strong> When required by UAE law or to protect our rights and safety.</li>
+              <li><strong>Legal Requirements:</strong> When required by NYC law or to protect our rights and safety.</li>
             </ul>
             <p>
               All third parties are required to maintain the confidentiality of your information and use it only for the specified purpose.
@@ -179,7 +179,7 @@ function Component() {
             </p>
             <ul className="list-disc ml-6 space-y-2">
               <li><strong>Email:</strong> ldc.co@mail.ru</li>
-              <li><strong>Phone:</strong> +1 917-353-9666</li>
+              <li><strong>Phone:</strong> +1 (332)2835813‬</li>
               <li><strong>Company Name:</strong> Purple Box Moving Company</li>
               <li><strong>Address:</strong> DAN LUNELL CORPORATION, 418 Broadway Ste Y, Albany, NY 12207</li>
             </ul>

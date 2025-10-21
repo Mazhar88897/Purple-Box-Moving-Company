@@ -5,6 +5,14 @@ import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { initEmailJS, sendEmail, formatEmailData } from '@/lib/emailjs'
 
+type StopData = {
+  id: string
+  address: string
+  accessType: string
+  doorman: boolean
+  coi: boolean
+}
+
 type QuoteFormData = {
   // Moving Information
   moveDate: string
@@ -25,6 +33,9 @@ type QuoteFormData = {
   dropoffAccessType: string
   dropoffDoorman: boolean
   dropoffCOI: boolean
+  
+  // Additional Stops
+  stops: StopData[]
   
   // Personal Information
   firstName: string
@@ -51,6 +62,7 @@ const initialData: QuoteFormData = {
   dropoffAccessType: "",
   dropoffDoorman: false,
   dropoffCOI: false,
+  stops: [],
   firstName: "",
   lastName: "",
   phone: "",
@@ -80,14 +92,64 @@ const ContactPage = () => {
     }
   }
 
+  const addStop = () => {
+    const newStop: StopData = {
+      id: Date.now().toString(),
+      address: "",
+      accessType: "",
+      doorman: false,
+      coi: false
+    }
+    setFormData((prev) => {
+      const updated = {
+        ...prev,
+        stops: [...prev.stops, newStop]
+      }
+      console.log('Added new stop. Current stops:', updated.stops)
+      return updated
+    })
+  }
+
+  const removeStop = (stopId: string) => {
+    setFormData((prev) => {
+      const updated = {
+        ...prev,
+        stops: prev.stops.filter(stop => stop.id !== stopId)
+      }
+      console.log('Removed stop. Current stops:', updated.stops)
+      return updated
+    })
+  }
+
+  const updateStop = (stopId: string, field: keyof StopData, value: string | boolean) => {
+    setFormData((prev) => {
+      const updated = {
+        ...prev,
+        stops: prev.stops.map(stop => 
+          stop.id === stopId ? { ...stop, [field]: value } : stop
+        )
+      }
+      console.log(`Updated stop ${stopId} field ${field} to:`, value)
+      console.log('Updated stops:', updated.stops)
+      return updated
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
+    // Log complete form data before submission
+    console.log('=== FORM SUBMISSION ===')
+    console.log('Complete form data:', formData)
+    console.log('Number of stops:', formData.stops.length)
+    console.log('Stops details:', formData.stops)
+    console.log('========================')
+
     try {
       // Validate required fields
       if (!formData.moveDate || !formData.pickupTime || !formData.moveType || 
-          !formData.storageServices || !formData.pickupAddress || !formData.dropoffAddress ||
+          !formData.pickupAddress || !formData.dropoffAddress ||
           !formData.firstName || !formData.lastName || !formData.phone || !formData.email ||
           !formData.inPersonQuote || !formData.hearAboutUs) {
         await Swal.fire({
@@ -101,29 +163,40 @@ const ContactPage = () => {
         return
       }
 
-      // Format the form data for EmailJS template
-      const emailData = {
-        to_name: "Purple Box Moving",
-        from_name: `${formData.firstName} ${formData.lastName}`,
-        from_email: formData.email,
+      // Format the form data for EmailJS template using the new formatEmailData function
+      const emailData = formatEmailData({
+        // Personal Information
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
         phone: formData.phone,
-        move_date: formData.moveDate,
-        pickup_time: formData.pickupTime,
-        move_type: formData.moveType,
-        storage_services: formData.storageServices,
-        pickup_address: formData.pickupAddress,
-        pickup_access: formData.pickupAccessType,
-        pickup_doorman: formData.pickupDoorman ? 'Yes' : 'No',
-        pickup_coi: formData.pickupCOI ? 'Yes' : 'No',
-        dropoff_address: formData.dropoffAddress,
-        dropoff_access: formData.dropoffAccessType,
-        dropoff_doorman: formData.dropoffDoorman ? 'Yes' : 'No',
-        dropoff_coi: formData.dropoffCOI ? 'Yes' : 'No',
-        additional_info: formData.additionalInfo,
-        in_person_quote: formData.inPersonQuote,
-        hear_about_us: formData.hearAboutUs,
-        message: `Moving Quote Request from ${formData.firstName} ${formData.lastName}`
-      }
+        
+        // Moving Information
+        moveDate: formData.moveDate,
+        pickupTime: formData.pickupTime,
+        moveType: formData.moveType,
+        inPersonQuote: formData.inPersonQuote,
+        
+        // Pickup Address Details
+        pickupAddress: formData.pickupAddress,
+        pickupAccessType: formData.pickupAccessType,
+        pickupDoorman: formData.pickupDoorman,
+        pickupCOI: formData.pickupCOI,
+        
+        // Dropoff Address Details
+        dropoffAddress: formData.dropoffAddress,
+        dropoffAccessType: formData.dropoffAccessType,
+        dropoffDoorman: formData.dropoffDoorman,
+        dropoffCOI: formData.dropoffCOI,
+        
+        // Additional Information
+        message: formData.additionalInfo || `Moving Quote Request from ${formData.firstName} ${formData.lastName}`,
+        
+        // Stops
+        stops: formData.stops
+      })
+      
+      console.log('Email data being sent:', emailData)
       
       // Send email using EmailJS
       const result = await sendEmail(emailData)
@@ -219,38 +292,7 @@ const ContactPage = () => {
             </div>
           </div>
 
-          {/* Storage Services Section */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Do you require purple box moving storage services? <span className="text-red-500">*</span>
-            </h2>
-            <div className="flex space-x-6">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="storageServices"
-                  value="yes"
-                  checked={formData.storageServices === "yes"}
-                  onChange={handleChange}
-                  className="mr-2"
-                  required
-                />
-                <span className="text-gray-700">Yes</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="storageServices"
-                  value="no"
-                  checked={formData.storageServices === "no"}
-                  onChange={handleChange}
-                  className="mr-2"
-                  required
-                />
-                <span className="text-gray-700">No</span>
-              </label>
-            </div>
-          </div>
+   
 
           {/* Pickup Address Section */}
           <div className="bg-white rounded-lg shadow-sm p-6">
@@ -383,14 +425,89 @@ const ContactPage = () => {
                   </label>
                 </div>
               </div>
-              <div className="flex items-center text-pink-600 cursor-pointer">
-                <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center mr-2">
+              <div className="flex items-center text-purple-600 cursor-pointer" onClick={addStop}>
+                <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-2">
                   <span className="text-white text-lg">+</span>
                 </div>
                 <span>Add stops if it is necessary</span>
               </div>
             </div>
           </div>
+
+          {/* Additional Stops */}
+          {formData.stops.map((stop, index) => (
+            <div key={stop.id} className="bg-white rounded-lg shadow-sm p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Additional Stop {index + 1}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => removeStop(stop.id)}
+                  className="text-red-500 hover:text-red-700 p-1"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">
+                *Please include the zip code when providing address.
+              </p>
+              <div className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    value={stop.address}
+                    onChange={(e) => updateStop(stop.id, 'address', e.target.value)}
+                    placeholder="Enter stop address"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Type of access:
+                  </label>
+                  <select
+                    value={stop.accessType}
+                    onChange={(e) => updateStop(stop.id, 'accessType', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">Choose an option</option>
+                    <option value="ground-floor">Ground Floor</option>
+                    <option value="elevator">Elevator Access</option>
+                    <option value="stairs">Stairs Only</option>
+                    <option value="narrow-access">Narrow Access</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Optional location details:
+                  </label>
+                  <div className="flex space-x-6">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={stop.doorman}
+                        onChange={(e) => updateStop(stop.id, 'doorman', e.target.checked)}
+                        className="mr-2"
+                      />
+                      <span className="text-gray-700">Doorman</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={stop.coi}
+                        onChange={(e) => updateStop(stop.id, 'coi', e.target.checked)}
+                        className="mr-2"
+                      />
+                      <span className="text-gray-700">COI</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
 
           {/* Personal Information and Quote Options */}
           <div className="bg-white rounded-lg shadow-sm p-6">
@@ -537,13 +654,7 @@ const ContactPage = () => {
                       You have the option to provide us with the list of your items & rooms, or submit now and we will call you back to collect your inventory details.
                     </p>
                     <div className="space-y-3">
-                      <button
-                        type="button"
-                        className="w-full bg-gray-200 text-gray-800 py-3 px-4 rounded-md hover:bg-gray-300 transition-colors"
-                      >
-                        Add items for instant pricing
-                      </button>
-                      <div className="text-center text-sm text-gray-500">or</div>
+                     
                       <button
                         type="submit"
                         disabled={isLoading}

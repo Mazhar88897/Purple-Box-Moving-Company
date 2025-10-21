@@ -18,7 +18,7 @@ const SpecialService = () => {
             </h2>
             <p className="text-md font-semibold text-gray-600 mb-6 leading-relaxed">
               Meet Purple Box, everyone favorite mover with an infectious smile and a can-do attitude. 
-              A true UAE mover, always on the move, rolling with whatever life brings and ready to lend a hand 
+              A true NYC mover, always on the move, rolling with whatever life brings and ready to lend a hand 
               (or wheel) on your next moving day.
             </p>
             <p className="text-md text-gray-600">

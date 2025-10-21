@@ -9,7 +9,7 @@ export default function MediaReviews() {
           {/* Left side - Title */}
           <div className="text-center md:text-left">
             <h2 className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 font-extrabold text-[#9A4CB9] ">
-              Top rated UAE movers
+              Top rated NYC movers
             </h2>
             <p className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 font-extrabold text-[#9A4CB9]">
               across ALL review sites

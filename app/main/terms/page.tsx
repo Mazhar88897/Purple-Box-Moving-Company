@@ -49,7 +49,7 @@ function Component() {
           <section>
             <h2 className="text-2xl font-bold mb-4 text-black">3. Moving Services and Responsibilities</h2>
             <p className="mb-4">
-              <strong>Purple Box Moving Company</strong> provides professional moving and packing services in the UAE. Our services include local and commercial moves, packing, loading, and delivery of your belongings.
+              <strong>Purple Box Moving Company</strong> provides professional moving and packing services in the NYC. Our services include local and commercial moves, packing, loading, and delivery of your belongings.
             </p>
             <ul className="list-disc ml-6 space-y-2">
               <li>
@@ -94,7 +94,7 @@ function Component() {
                 <strong>Data Collection:</strong> We collect information necessary to provide moving services, including contact details, moving addresses, inventory information, and special requirements. This data is used solely for service delivery and customer communication.
               </li>
               <li>
-                <strong>COI Requirements:</strong> We may share necessary information with building management to obtain Certificate of Insurance (COI) requirements for your move, as required by UAE building regulations.
+                <strong>COI Requirements:</strong> We may share necessary information with building management to obtain Certificate of Insurance (COI) requirements for your move, as required by NYC building regulations.
               </li>
               <li>
                 <strong>Data Security:</strong> We implement appropriate security measures to protect your personal information and ensure it is not shared with unauthorized third parties.
@@ -141,7 +141,7 @@ function Component() {
                 <strong>Contact Information:</strong> For questions about these Terms and Conditions, please contact us at:
                 <ul className="list-disc ml-6 mt-2 space-y-1">
                   <li><strong>Email:</strong> ldc.co@mail.ru</li>
-                  <li><strong>Phone:</strong> +1 917-353-9666</li>
+                  <li><strong>Phone:</strong> +1 (332)2835813‬</li>
                   <li><strong>Company:</strong> Purple Box Moving Company</li>
                 </ul>
               </li>

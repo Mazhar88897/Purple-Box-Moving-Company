@@ -2,7 +2,7 @@ import emailjs from '@emailjs/browser';
 
 // EmailJS configuration
 const EMAILJS_SERVICE_ID = 'service_t8srnau';
-const EMAILJS_TEMPLATE_ID = 'template_yh0pzzf';
+const EMAILJS_TEMPLATE_ID = 'template_yo854ov';
 const EMAILJS_PUBLIC_KEY = 'yD2XGJhCWpvQvaZIR';
 
 // Initialize EmailJS
@@ -45,30 +45,100 @@ export const sendEmail = async (templateParams: Record<string, string>) => {
   }
 };
 
-// Format form data for EmailJS template
+// Generate HTML table for stops
+export const generateStopsTableHTML = (stops: Array<{
+  id: string;
+  address: string;
+  accessType: string;
+  doorman: boolean;
+  coi: boolean;
+}>) => {
+  if (!stops || stops.length === 0) {
+    return 'No additional stops';
+  }
+
+  const tableRows = stops.map((stop, index) => 
+    `Stop ${index + 1}: ${stop.address || 'Not provided'}\n` +
+    `Access Type: ${stop.accessType || 'Not specified'}\n` +
+    `Doorman: ${stop.doorman ? 'Yes' : 'No'}\n` +
+    `COI: ${stop.coi ? 'Yes' : 'No'}\n` +
+    `----------------------------\n`
+  ).join('\n');
+
+  return `ADDITIONAL STOPS:\n${tableRows}`;
+};
+
+// Format form data for EmailJS template with all new fields
 export const formatEmailData = (formData: {
+  // Personal Information
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  pickupCityState: string;
-  pickupZip: string;
-  deliveryCityState: string;
-  deliveryZip: string;
+  
+  // Moving Information
   moveDate: string;
-  bedrooms: string;
+  pickupTime: string;
+  moveType: string;
+  inPersonQuote: string;
+  
+  // Pickup Address Details
+  pickupAddress: string;
+  pickupAccessType: string;
+  pickupDoorman: boolean;
+  pickupCOI: boolean;
+  
+  // Dropoff Address Details
+  dropoffAddress: string;
+  dropoffAccessType: string;
+  dropoffDoorman: boolean;
+  dropoffCOI: boolean;
+  
+  // Additional Information
+  message?: string;
+  
+  // Stops
+  stops?: Array<{
+    id: string;
+    address: string;
+    accessType: string;
+    doorman: boolean;
+    coi: boolean;
+  }>;
 }) => {
+  const stopsTableHTML = formData.stops ? generateStopsTableHTML(formData.stops) : '<p>No additional stops</p>';
+  
   return {
+    // Personal Information
+    first_name: formData.firstName,
+    last_name: formData.lastName,
     email: formData.email,
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    pickupCityState: formData.pickupCityState,
-    pickupZip: formData.pickupZip,
-    deliveryCityState: formData.deliveryCityState,
-    deliveryZip: formData.deliveryZip,
-    moveDate: formData.moveDate,
-    bedrooms: formData.bedrooms,
-    phone: formData.phone,
-    name: `${formData.firstName} ${formData.lastName}` // Combined name field
+    phone_number: formData.phone,
+    
+    // Moving Information
+    move_date: formData.moveDate,
+    preferred_pickup_time: formData.pickupTime,
+    type_of_move: formData.moveType,
+    in_person_qoute: formData.inPersonQuote,
+    
+    // Pickup Address Details
+    pickup_address: formData.pickupAddress,
+    pickup_floor: formData.pickupAccessType || '',
+    opt_pickup_floor: formData.pickupDoorman ? 'Doorman: Yes' : 'Doorman: No',
+    
+    // Dropoff Address Details
+    dropoff_address: formData.dropoffAddress,
+    dropoff_floor: formData.dropoffAccessType || '',
+    opt_drop_floor: formData.dropoffDoorman ? 'Doorman: Yes' : 'Doorman: No',
+    
+    // Additional Information
+    message: formData.message || '',
+    
+    // Stops Information
+    additional_stops: stopsTableHTML,
+    
+    // Legacy fields for backward compatibility
+    name: `${formData.firstName} ${formData.lastName}`,
+    full_name: `${formData.firstName} ${formData.lastName}`
   };
 };

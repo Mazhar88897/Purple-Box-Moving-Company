@@ -41,7 +41,7 @@ export default function COIFAQ() {
     {
       title: "Q7. Who should I contact for COI assistance?",
       description:
-        "Contact our COI Support Team at +971 50 979 0305 or via our website contact form. We’ll process everything quickly to keep your move on schedule.",
+        "Contact our COI Support Team at +1 (332)2835813‬ or via our website contact form. We’ll process everything quickly to keep your move on schedule.",
     },
   ]
 
@@ -60,7 +60,7 @@ Frequently <span className="text-transparent bg-clip-text bg-gradient-to-r from-
             </h2>
             {/* <div className="mt-5 space-y-4 text-[15px] text-xs leading-7 text-slate-600">
               <p>
-                At <span className="font-semibold">Purple Box Moving Company</span>, we know UAE moves—especially in
+                At <span className="font-semibold">Purple Box Moving Company</span>, we know NYC moves—especially in
                 apartments, offices, and towers—come with strict building rules. We handle all
                 <span className="font-semibold"> COI </span>requirements for you so your move stays smooth, compliant, and
                 stress‑free.
