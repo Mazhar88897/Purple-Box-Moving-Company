@@ -25,6 +25,7 @@ import Sections from "@/components/screens/sections"
 import Strip from "@/components/screens/strip"
 import Insta from "@/components/screens/insta"
 import SpecialService from "@/components/screens/special"
+import SecondService from "@/components/screens/secondService"
 
 export default function Home() {
   return (
@@ -115,6 +116,10 @@ export default function Home() {
    </>
 
 <Sections />
+
+<>
+      <SecondService  />
+      </>
 
 <div className="hidden md:block">
 <Strip />  

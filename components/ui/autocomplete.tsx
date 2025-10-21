@@ -45,7 +45,10 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
     )
 
     setFilteredOptions(filtered)
-    setIsOpen(filtered.length > 0)
+    // Only open dropdown if there are filtered options and the input is being actively typed
+    // Don't open if the value exactly matches a full address (indicating selection)
+    const isExactMatch = options.some(option => option.fullAddress === value)
+    setIsOpen(filtered.length > 0 && !isExactMatch)
   }, [value, options])
 
   // Handle input change
@@ -58,11 +61,17 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
   const handleOptionSelect = (option: CityOption) => {
     onSelect(option)
     setIsOpen(false)
+    // Clear focus from input to prevent immediate reopening
+    if (inputRef.current) {
+      inputRef.current.blur()
+    }
   }
 
   // Handle input focus
   const handleFocus = () => {
-    if (filteredOptions.length > 0) {
+    // Only show dropdown if there are filtered options and the current value is not a complete selection
+    const isExactMatch = options.some(option => option.fullAddress === value)
+    if (filteredOptions.length > 0 && !isExactMatch) {
       setIsOpen(true)
     }
   }
@@ -95,13 +104,13 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
         value={value}
         onChange={handleInputChange}
         onFocus={handleFocus}
-        className={`w-[300px] sm:w-[400px] text-xs text-black bg-white rounded-lg p-2 py-3 border-t-2 border-b-2 border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent ${className}`}
+        className={`w-[300px] sm:w-[400px] text-xs text-black bg-white rounded-lg p-2 py-3 border-t-2 border-b-2 border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent ${className}`}
       />
       
       {isOpen && filteredOptions.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute top-full left-0 right-0 mt-1 bg-white border-l-2 border-r-2 border-b-2 border-pink-500 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
+          className="absolute top-full left-0 right-0 mt-1 bg-white border-l-2 border-r-2 border-b-2 border-purple-500 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
         >
           {filteredOptions.map((option, index) => (
             <div

@@ -5,6 +5,7 @@ const PackingService = () => {
   const services = [
     {
       id: 1,
+     
       title: "24/7/365 Moving",
       description: "The only moving company in NYC that offers any day and time moving services. No matter how big or small your move is we will move it.",
       icon: "/i-clock.png", // Placeholder for calendar icon
@@ -12,37 +13,38 @@ const PackingService = () => {
     },
     {
       id: 2,
-      title: "Local Residential Moving Services",
-      description: "We specialize in local residential NYC and New York State moves. We can move you across all of New York City's Five Boroughs and surrounding Tri State locations.",
-      icon: "/i-world.png", // Placeholder for map icon
-      link: "#"
-    },
-    {
-      id: 3,
       title: "Long Distance Moving Services",
       description: "From NYC to Miami, California and Seattle we can move you to any state in the USA. With on time long distance delivery dates and safe packing we will get you settled into your new home quickly.",
       icon: "/i-ballon.png", // Placeholder for USA map icon
       link: "#"
     },
     {
+      id: 3,
+      title: "Small Moves",
+      description: "Need to move a few small items or moving out of a studio with minimal furniture? Do not lift a finger with our small move service.",
+      icon: "/icon-boxlogo.png", // Placeholder for sofa icon
+      link: "#"
+     
+    },
+    {
       id: 4,
+      title: "Last Minute Moves",
+      description: "Need to move urgently, our last minute moving service will save the day. We will get you into your new address asap! We also offer emergency packing and storage services.",
+      icon: "/i-box.png", // Placeholder for hourglass icon
+      link: "#"
+    },
+    {
+      id: 5,
       title: "Office and Commercial Moves",
       description: "We can move your office overnight, on the weekend and during holidays to minimize your downtime. With full office packing and unpacking, your staff will be up and running the next morning.",
       icon: "/i-home.png", // Placeholder for office buildings icon
       link: "#"
     },
     {
-      id: 5,
-      title: "Small Moves",
-      description: "Need to move a few small items or moving out of a studio with minimal furniture? Do not lift a finger with our small move service.",
-      icon: "/icon-boxlogo.png", // Placeholder for sofa icon
-      link: "#"
-    },
-    {
       id: 6,
-      title: "Last Minute Moves",
-      description: "Need to move urgently, our last minute moving service will save the day. We will get you into your new address asap! We also offer emergency packing and storage services.",
-      icon: "/i-box.png", // Placeholder for hourglass icon
+      title: "Local Residential Moving Services",
+      description: "We specialize in local residential NYC and New York State moves. We can move you across all of New York City's Five Boroughs and surrounding Tri State locations.",
+      icon: "/i-world.png", // Placeholder for map icon
       link: "#"
     }
   ];
