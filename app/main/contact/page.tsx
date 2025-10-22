@@ -4,6 +4,9 @@ import type React from "react"
 import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { initEmailJS, sendEmail, formatEmailData } from '@/lib/emailjs'
+import { useRouter } from 'next/navigation'
+// import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 
 type StopData = {
   id: string
@@ -76,7 +79,7 @@ const ContactPage = () => {
   const [formData, setFormData] = useState<QuoteFormData>(initialData)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
-
+  const router = useRouter()
   // Initialize EmailJS on component mount
   useEffect(() => {
     initEmailJS()
@@ -204,6 +207,15 @@ const ContactPage = () => {
       if (result.success) {
         setShowSuccessModal(true)
         setFormData(initialData)
+        // toast.success('Email sent successfully')
+        await Swal.fire({
+          title: 'Email sent successfully',
+          text: 'We will get back to you soon',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#9A4CB9',
+        })
+        router.push('/')
       } else {
         throw new Error(result.message || 'Failed to send email')
       }
@@ -659,7 +671,7 @@ const ContactPage = () => {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-gray-200 text-gray-800 py-3 px-4 rounded-md hover:bg-gray-300 transition-colors disabled:opacity-50"
+                        className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 text-white py-3 px-4 rounded-md  transition-colors disabled:opacity-50"
                       >
                         {isLoading ? "Submitting..." : "Submit now & we will get in touch"}
                       </button>
