@@ -36,7 +36,7 @@ const ParameterVariationTest: React.FC = () => {
         console.error(`${methodName} error:`, error)
         newResults[methodName] = {
           success: false,
-          error: error.message || 'Unknown error',
+          error: (error as Error).message || 'Unknown error',
           count: 0
         }
       } finally {
@@ -67,8 +67,8 @@ const ParameterVariationTest: React.FC = () => {
         <div className="mb-6 p-4 bg-red-50 rounded-lg">
           <h3 className="font-semibold text-red-900 mb-2">Current Issue:</h3>
           <p className="text-red-800 text-sm">
-            Even with corrected parameters, we're still getting <code>ZERO_RESULTS</code> from the JSONP method. 
-            This test will help identify which methods work and which don't.
+            Even with corrected parameters, we are still getting <code>ZERO_RESULTS</code> from the JSONP method. 
+            This test will help identify which methods work and which don&apos;t.
           </p>
         </div>
 
@@ -162,7 +162,7 @@ const ParameterVariationTest: React.FC = () => {
             <p>• Use the Standard Google Places API (which works)</p>
             <p>• Check if the API key has Places API enabled</p>
             <p>• Verify billing is set up for the Google Cloud project</p>
-            <p>• Try different search terms to see if it's input-specific</p>
+            <p>• Try different search terms to see if it&apos;s input-specific</p>
             <p>• Consider using a proxy server to avoid CORS issues</p>
           </div>
         </div>

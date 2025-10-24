@@ -117,7 +117,7 @@ const ParameterComparisonTest: React.FC = () => {
             <p>• Added missing <code>1sku</code> parameter</p>
             <p>• Updated <code>20s</code> parameter name</p>
             <p>• Updated token to <code>33770</code></p>
-            <p>• Kept target website's API key and URL</p>
+            <p>• Kept target website&apos;s API key and URL</p>
           </div>
         </div>
 

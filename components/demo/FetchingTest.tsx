@@ -51,7 +51,7 @@ const FetchingTest: React.FC = () => {
         <div className="mb-6 p-4 bg-red-50 rounded-lg">
           <h3 className="font-semibold text-red-900 mb-2">Issue Found:</h3>
           <p className="text-red-800 text-sm">
-            The autocomplete was continuously fetching because the useEffect dependency array included 'filteredOptions', 
+            The autocomplete was continuously fetching because the useEffect dependency array included &apos;filteredOptions&apos;, 
             which caused an infinite loop: search → update filteredOptions → trigger useEffect → search again.
           </p>
         </div>
@@ -59,9 +59,9 @@ const FetchingTest: React.FC = () => {
         <div className="mb-6 p-4 bg-green-50 rounded-lg">
           <h3 className="font-semibold text-green-900 mb-2">Fix Applied:</h3>
           <ul className="text-green-800 text-sm space-y-1">
-            <li>• Removed 'filteredOptions' from useEffect dependency array</li>
-            <li>• Added 'lastSearchRef' to track previous search value</li>
-            <li>• Added check to prevent searching if value hasn't changed</li>
+            <li>• Removed &apos;filteredOptions&apos; from useEffect dependency array</li>
+            <li>• Added &apos;lastSearchRef&apos; to track previous search value</li>
+            <li>• Added check to prevent searching if value hasn&apos;t changed</li>
             <li>• Improved exact match logic to avoid unnecessary checks</li>
           </ul>
         </div>
@@ -122,8 +122,8 @@ const FetchingTest: React.FC = () => {
         <div className="mt-6 p-4 bg-purple-50 rounded-lg">
           <h4 className="font-semibold text-purple-900 mb-2">Technical Changes:</h4>
           <div className="text-sm text-purple-800 space-y-1">
-            <p><strong>Dependency Array:</strong> Removed 'filteredOptions' to prevent infinite loop</p>
-            <p><strong>Search Tracking:</strong> Added 'lastSearchRef' to track previous search value</p>
+            <p><strong>Dependency Array:</strong> Removed &apos;filteredOptions&apos; to prevent infinite loop</p>
+            <p><strong>Search Tracking:</strong> Added &apos;lastSearchRef&apos; to track previous search value</p>
             <p><strong>Duplicate Prevention:</strong> Check if value changed before searching</p>
             <p><strong>Exact Match Logic:</strong> Only check exact matches when options exist</p>
           </div>

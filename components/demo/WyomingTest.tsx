@@ -44,7 +44,7 @@ const WyomingTest: React.FC = () => {
       
       <div className="mb-4 p-4 bg-green-50 rounded-lg">
         <p className="text-green-800 text-sm">
-          <strong>✅ FIXED!</strong> The issue was that "wy" was being filtered for street addresses only.
+        <strong>✅ FIXED!</strong> The issue was that w was being filtered for street addresses only.
           Now it searches for all geocoded places (states, cities, etc.) so Wyoming should appear!
         </p>
       </div>

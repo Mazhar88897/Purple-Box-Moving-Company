@@ -24,7 +24,7 @@ const MinimalTest: React.FC = () => {
       
     } catch (error) {
       console.error('Minimal test error:', error)
-      setResult({ error: error.message })
+      setResult({ error: (error as Error).message || 'Unknown error' })
     } finally {
       setLoading(false)
     }
@@ -38,8 +38,8 @@ const MinimalTest: React.FC = () => {
       
       <div className="mb-4 p-4 bg-red-50 rounded-lg">
         <p className="text-red-800 text-sm">
-          <strong>Problem:</strong> We're getting ZERO_RESULTS even with correct parameters.
-          Let's test the most basic possible call to see if the API works at all.
+            <strong>Problem:</strong> We are getting ZERO_RESULTS even with correct parameters.
+          Let&apos;s test the most basic possible call to see if the API works at all.
         </p>
       </div>
 

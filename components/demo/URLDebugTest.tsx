@@ -42,7 +42,7 @@ const URLDebugTest: React.FC = () => {
     } catch (error) {
       console.error('Error testing URL generation:', error)
       setResult({
-        error: error.message,
+        error: (error as Error).message || 'Unknown error',
         url: 'Error occurred'
       })
     } finally {
@@ -63,7 +63,7 @@ const URLDebugTest: React.FC = () => {
       <div className="mb-4 p-4 bg-yellow-50 rounded-lg">
         <p className="text-yellow-800 text-sm">
           <strong>Issue:</strong> Your request shows <code>GetPredictionsJson</code> but our code uses <code>GetPredictions</code>.
-          Let's see what URL is actually being generated.
+            Let&apos;s see what URL is actually being generated.
         </p>
       </div>
 
@@ -147,7 +147,7 @@ const URLDebugTest: React.FC = () => {
           <div className="text-sm text-blue-800 space-y-1">
             <p>• <strong>URL contains &quot;GetPredictions&quot;:</strong> Our code is working correctly</p>
             <p>• <strong>URL contains &quot;GetPredictionsJson&quot;:</strong> Something else is modifying the URL</p>
-            <p>• <strong>Results count > 0:</strong> The API is working</p>
+            <p>• <strong>Results count &gt; 0:</strong> The API is working</p>
             <p>• <strong>Results count = 0:</strong> Still getting ZERO_RESULTS</p>
           </div>
         </div>

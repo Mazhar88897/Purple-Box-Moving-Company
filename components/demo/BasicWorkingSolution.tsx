@@ -46,7 +46,7 @@ const BasicWorkingSolution: React.FC = () => {
       <div className="mb-4 p-4 bg-green-50 rounded-lg">
         <p className="text-green-800 text-sm">
           <strong>✅ WORKING!</strong> This uses the basic Google Places API that was working initially.
-          All the complex logic is kept but we're using the simple, reliable endpoint.
+          All the complex logic is kept but we are using the simple, reliable endpoint.
         </p>
       </div>
 

@@ -172,7 +172,7 @@ export default function TestWebsiteParamsPage() {
           </h3>
           <div className="text-yellow-800 space-y-2 text-sm">
             <p>
-              <strong>Website Parameters:</strong> Uses the exact same parameters as the website you're cloning, including the API key, referrer URL, and all the specific parameter names.
+              <strong>Website Parameters:</strong> Uses the exact same parameters as the website youre cloning, including the API key, referrer URL, and all the specific parameter names.
             </p>
             <p>
               <strong>JSONP Method:</strong> Replicates the exact JSONP callback behavior using dynamic script injection, just like the website does.

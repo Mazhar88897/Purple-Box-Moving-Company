@@ -133,7 +133,7 @@ const WebsiteParamsDemo: React.FC = () => {
           </h4>
           <div className="text-sm text-yellow-800 space-y-2">
             <p>
-              <strong>Website Parameters Method:</strong> Uses the exact same parameters as the website you're cloning, including the API key, referrer URL, and all the specific parameter names.
+              <strong>Website Parameters Method:</strong> Uses the exact same parameters as the website youre cloning, including the API key, referrer URL, and all the specific parameter names.
             </p>
             <p>
               <strong>JSONP Method:</strong> Replicates the exact JSONP callback behavior using dynamic script injection, just like the website does.

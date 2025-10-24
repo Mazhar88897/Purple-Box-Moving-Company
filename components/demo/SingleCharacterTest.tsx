@@ -42,7 +42,7 @@ const SingleCharacterTest: React.FC = () => {
             <li>• Try different single characters to see various results</li>
             <li>• The debounce time is reduced to 150ms for faster response</li>
           </ul>
-        </div>
+        </div>  
 
         <div className="space-y-4">
           <div>
@@ -90,7 +90,7 @@ const SingleCharacterTest: React.FC = () => {
                   key={index}
                   className="bg-yellow-200 text-yellow-800 px-2 py-1 rounded text-sm font-mono"
                 >
-                  "{char}"
+                  &quot;{char}&quot;
                 </span>
               ))}
             </div>

@@ -51,7 +51,7 @@ const GoogleFormatDemo: React.FC = () => {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Test Input (try typing "hunt"):
+              Test Input (try typing &quot;hunt&quot;):
             </label>
             <input
               type="text"

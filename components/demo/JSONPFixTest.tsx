@@ -7,7 +7,7 @@ const JSONPFixTest: React.FC = () => {
   const [loading, setLoading] = useState(false)
 
   const testJSONPWithDifferentKeys = async () => {
-    if (!input.trim()) return
+    if (!input.trim()) return 
 
     setLoading(true)
     setResults([])
@@ -118,7 +118,7 @@ const JSONPFixTest: React.FC = () => {
       <div className="mb-4 p-4 bg-yellow-50 rounded-lg">
         <p className="text-yellow-800 text-sm">
           <strong>Goal:</strong> Test different API keys and methods to find what works.
-          We'll try both our key and the target website's key with both fetch and JSONP.
+          We will try both our key and the target website&apos;s key with both fetch and JSONP.
         </p>
       </div>
 
@@ -203,7 +203,7 @@ const JSONPFixTest: React.FC = () => {
           <div className="text-sm text-green-800 space-y-1">
             <p>• <strong>Status &quot;OK&quot;:</strong> This method works! Use this approach.</p>
             <p>• <strong>Status &quot;ZERO_RESULTS&quot;:</strong> API works but no matches for this input.</p>
-            <p>• <strong>Status &quot;REQUEST_DENIED&quot;:</strong> API key doesn't have permission.</p>
+            <p>• <strong>Status &quot;REQUEST_DENIED&quot;:</strong> API key doesn&apos;t have permission.</p>
             <p>• <strong>Status &quot;ERROR&quot;:</strong> Network or other technical issue.</p>
           </div>
         </div>
