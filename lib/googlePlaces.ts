@@ -384,6 +384,7 @@ export const fetchPlacesWithWebsiteParams = async (input: string): Promise<CityO
       throw new Error(`HTTP error! status: ${response.status}`)
     }
     
+    
     const data = await response.json()
     
     // Convert the response to our format
@@ -418,6 +419,9 @@ export const fetchPlacesWithJSONP = async (input: string): Promise<CityOption[]>
     
     console.log('Generated callback name:', callbackName)
     
+    // Create the script element early so it's available in all callbacks
+    const script = document.createElement('script')
+    
     // Set up timeout to fallback to regular API if JSONP fails
     const timeoutId = setTimeout(() => {
       console.log('JSONP timeout, falling back to regular API')
@@ -431,7 +435,10 @@ export const fetchPlacesWithJSONP = async (input: string): Promise<CityOption[]>
     
     // Use the basic Google Places API endpoint that was working initially
     const fullUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=AIzaSyBVh5anaF4M3aW7ZE8rvoRX2Zf3hmYUxss&callback=${callbackName}`
-    console.log('JSONP URL:', fullUrl)
+    // Debug: Log the JSONP URL
+    if (typeof console !== 'undefined' && console.log) {
+      console.log('JSONP URL:', fullUrl)
+    }
     
     // Set up the global callback
     (window as any)[callbackName] = (data: any) => {
@@ -479,8 +486,7 @@ export const fetchPlacesWithJSONP = async (input: string): Promise<CityOption[]>
       }
     }
     
-    // Create and inject the script tag
-    const script = document.createElement('script')
+    // Configure and inject the script tag
     script.src = fullUrl
     script.async = true
     
