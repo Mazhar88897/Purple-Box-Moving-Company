@@ -55,7 +55,7 @@ const AlphabetTest: React.FC = () => {
         <div className="mb-6 p-4 bg-green-50 rounded-lg">
           <h3 className="font-semibold text-green-900 mb-2">Fix Applied:</h3>
           <ul className="text-green-800 text-sm space-y-1">
-            <li>• Changed API types from 'street_address' to 'geocode' for single character searches</li>
+            <li>• Changed API types from street_address to geocode for single character searches</li>
             <li>• Removed strict filtering for single character searches</li>
             <li>• Added diverse city names in mock data (A, B, C, D, H cities)</li>
             <li>• Improved filtering logic to include description matching</li>
@@ -131,7 +131,7 @@ const AlphabetTest: React.FC = () => {
         <div className="mt-6 p-4 bg-purple-50 rounded-lg">
           <h4 className="font-semibold text-purple-900 mb-2">Technical Changes:</h4>
           <div className="text-sm text-purple-800 space-y-1">
-            <p><strong>API Types:</strong> Single chars use 'geocode', longer searches use 'street_address'</p>
+            <p><strong>API Types:</strong> Single chars use geocode, longer searches use street_address</p>
             <p><strong>Filtering:</strong> No filtering for single chars, smart filtering for longer searches</p>
             <p><strong>Mock Data:</strong> Added cities starting with A, B, C, D, H for better testing</p>
             <p><strong>Description Matching:</strong> Added description.toLowerCase().includes() for better matching</p>

@@ -20,10 +20,10 @@ const WorkingSolution: React.FC = () => {
         </h2>
         
         <div className="mb-6 p-4 bg-green-50 rounded-lg">
-          <h3 className="font-semibold text-green-900 mb-2">✅ What's Working:</h3>
+          <h3 className="font-semibold text-green-900 mb-2">✅ Whats Working:</h3>
           <p className="text-green-800 text-sm">
             The Standard Google Places API is working perfectly with numbers and letters. 
-            This is the recommended approach for production use.
+            This is the recommended approach for production use.    
           </p>
         </div>
 
@@ -73,8 +73,8 @@ const WorkingSolution: React.FC = () => {
             <p>• <strong>Use the Standard Google Places API</strong> for production</p>
             <p>• It works with both numbers and letters</p>
             <p>• It has proper error handling and fallbacks</p>
-            <p>• It doesn't have CORS issues</p>
-            <p>• It's more reliable and maintainable</p>
+            <p>• It doesnt have CORS issues</p>
+            <p>• Its more reliable and maintainable</p>
           </div>
         </div>
 

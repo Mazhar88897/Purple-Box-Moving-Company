@@ -11,7 +11,7 @@ const SimpleAPITest: React.FC = () => {
     if (!input.trim()) return
 
     setLoading(true)
-    setError(null)
+    setError(null)    
     setResults(null)
 
     try {
@@ -35,7 +35,7 @@ const SimpleAPITest: React.FC = () => {
       
     } catch (err) {
       console.error('Basic API error:', err)
-      setError(err.message || 'Unknown error')
+      setError((err as unknown as Error).message || 'Unknown error')
     } finally {
       setLoading(false)
     }
@@ -75,7 +75,7 @@ const SimpleAPITest: React.FC = () => {
       
     } catch (err) {
       console.error('Full params error:', err)
-      setError(err.message || 'Unknown error')
+      setError((err as unknown as Error).message || 'Unknown error')
     } finally {
       setLoading(false)
     }
@@ -89,10 +89,11 @@ const SimpleAPITest: React.FC = () => {
     setResults(null)
 
     return new Promise<void>((resolve) => {
-      const callbackName = `_xdc_._test_${Date.now()}`
+      const callbackName: any = `_xdc_._test_${Date.now()}`
+      const callbackNameString = callbackName as string
       
       // Set up callback
-      (window as any)[callbackName] = (data: any) => {
+      (window as any)[callbackNameString] = (data: any) => {
         console.log('JSONP callback received:', data)
         setResults({
           method: 'JSONP Test',
@@ -135,8 +136,8 @@ const SimpleAPITest: React.FC = () => {
         <div className="mb-6 p-4 bg-red-50 rounded-lg">
           <h3 className="font-semibold text-red-900 mb-2">Still Getting ZERO_RESULTS:</h3>
           <p className="text-red-800 text-sm">
-            Let's test the Google Places API directly to see if we can get ANY results at all.
-            This will help us understand if it's a parameter issue or something else.
+            Let&apos;s test the Google Places API directly to see if we can get ANY results at all.
+            This will help us understand if it&apos;s a parameter issue or something else.
           </p>
         </div>
 

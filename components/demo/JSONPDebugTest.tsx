@@ -69,7 +69,7 @@ const JSONPDebugTest: React.FC = () => {
           <h3 className="font-semibold text-red-900 mb-2">Issue:</h3>
           <p className="text-red-800 text-sm">
             Dynamic response (JSONP) is not working, but numbers work perfectly. 
-            This debug test will help identify what's going wrong with the JSONP requests.
+            This debug test will help identify whats going wrong with the JSONP requests.
           </p>
         </div>
 
