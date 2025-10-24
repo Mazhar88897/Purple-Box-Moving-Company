@@ -54,13 +54,13 @@ const Hero = () => {
           <div className="order-1 lg:order-2 text-white">
             <div className="max-w-lg mx-auto lg:mx-0">
               {/* Main Headline */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
               Five-star moving made simple
    <span className="text-[#221c55]">with Purple Box</span>.
               </h1>
               
-              <p className="text-lg   text-purple-950 font-bold">Affordable moving & storage services.</p>
-              <p className="text-lg  text-white/90 mb-8 font-medium">
+              <p className="text-xl   text-purple-950 font-bold">Affordable moving & storage services.</p>
+              <p className="text-xl  text-white/90 mb-8 font-medium">
            
               Get your guaranteed all-inclusive quote in minutes.   </p>
 
