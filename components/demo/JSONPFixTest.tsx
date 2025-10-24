@@ -201,10 +201,10 @@ const JSONPFixTest: React.FC = () => {
         <div className="mt-6 p-4 bg-green-50 rounded-lg">
           <h4 className="font-semibold text-green-900 mb-2">What to Look For:</h4>
           <div className="text-sm text-green-800 space-y-1">
-            <p>• <strong>Status "OK":</strong> This method works! Use this approach.</p>
-            <p>• <strong>Status "ZERO_RESULTS":</strong> API works but no matches for this input.</p>
-            <p>• <strong>Status "REQUEST_DENIED":</strong> API key doesn't have permission.</p>
-            <p>• <strong>Status "ERROR":</strong> Network or other technical issue.</p>
+            <p>• <strong>Status &quot;OK&quot;:</strong> This method works! Use this approach.</p>
+            <p>• <strong>Status &quot;ZERO_RESULTS&quot;:</strong> API works but no matches for this input.</p>
+            <p>• <strong>Status &quot;REQUEST_DENIED&quot;:</strong> API key doesn't have permission.</p>
+            <p>• <strong>Status &quot;ERROR&quot;:</strong> Network or other technical issue.</p>
           </div>
         </div>
       </div>

@@ -145,8 +145,8 @@ const URLDebugTest: React.FC = () => {
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <h4 className="font-semibold text-blue-900 mb-2">What to Check:</h4>
           <div className="text-sm text-blue-800 space-y-1">
-            <p>• <strong>URL contains "GetPredictions":</strong> Our code is working correctly</p>
-            <p>• <strong>URL contains "GetPredictionsJson":</strong> Something else is modifying the URL</p>
+            <p>• <strong>URL contains &quot;GetPredictions&quot;:</strong> Our code is working correctly</p>
+            <p>• <strong>URL contains &quot;GetPredictionsJson&quot;:</strong> Something else is modifying the URL</p>
             <p>• <strong>Results count > 0:</strong> The API is working</p>
             <p>• <strong>Results count = 0:</strong> Still getting ZERO_RESULTS</p>
           </div>

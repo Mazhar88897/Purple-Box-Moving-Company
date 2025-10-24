@@ -114,8 +114,8 @@ const GoogleFormatDemo: React.FC = () => {
           <h4 className="font-semibold text-blue-900 mb-2">How to Use This Format:</h4>
           <div className="text-sm text-blue-800 space-y-1">
             <p>1. The data comes as an array: <code>[0, [array of places]]</code></p>
-            <p>2. Each place is: <code>["Full Address", null, types, "place_id", null, address_parts, ...]</code></p>
-            <p>3. Address parts: <code>[["City", 0], ["State", 12], ["Country", 16]]</code></p>
+            <p>2. Each place is: <code>[&quot;Full Address&quot;, null, types, &quot;place_id&quot;, null, address_parts, ...]</code></p>
+            <p>3. Address parts: <code>[[&quot;City&quot;, 0], [&quot;State&quot;, 12], [&quot;Country&quot;, 16]]</code></p>
             <p>4. Use <code>parseGoogleAutocompleteData()</code> to convert to your format</p>
           </div>
         </div>

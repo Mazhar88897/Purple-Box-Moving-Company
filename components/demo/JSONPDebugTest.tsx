@@ -76,7 +76,7 @@ const JSONPDebugTest: React.FC = () => {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Test Input (try "hu" or "123"):
+              Test Input (try &quot;hu&quot; or &quot;123&quot;):
             </label>
             <div className="flex gap-2">
               <input

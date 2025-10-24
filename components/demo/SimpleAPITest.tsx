@@ -143,7 +143,7 @@ const SimpleAPITest: React.FC = () => {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Test Input (try "k", "ku", "kut", "kutztown"):
+              Test Input (try &quot;k&quot;, &quot;ku&quot;, &quot;kut&quot;, &quot;kutztown&quot;):
             </label>
             <div className="flex gap-2">
               <input
@@ -234,10 +234,10 @@ const SimpleAPITest: React.FC = () => {
         <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
           <h4 className="font-semibold text-yellow-900 mb-2">What to Look For:</h4>
           <div className="text-sm text-yellow-800 space-y-1">
-            <p>• <strong>Status "OK":</strong> API is working, we should get results</p>
-            <p>• <strong>Status "ZERO_RESULTS":</strong> API is working but no matches found</p>
-            <p>• <strong>Status "REQUEST_DENIED":</strong> API key issue</p>
-            <p>• <strong>Status "OVER_QUERY_LIMIT":</strong> Rate limiting issue</p>
+            <p>• <strong>Status &quot;OK&quot;:</strong> API is working, we should get results</p>
+            <p>• <strong>Status &quot;ZERO_RESULTS&quot;:</strong> API is working but no matches found</p>
+            <p>• <strong>Status &quot;REQUEST_DENIED&quot;:</strong> API key issue</p>
+            <p>• <strong>Status &quot;OVER_QUERY_LIMIT&quot;:</strong> Rate limiting issue</p>
             <p>• <strong>CORS Error:</strong> Browser blocking the request</p>
           </div>
         </div>

@@ -37,7 +37,7 @@ const SingleCharacterTest: React.FC = () => {
         <div className="mb-6 p-4 bg-green-50 rounded-lg">
           <h3 className="font-semibold text-green-900 mb-2">Test Instructions:</h3>
           <ul className="text-sm text-green-800 space-y-1">
-            <li>• Type a single character (like "h", "a", "n") to see immediate results</li>
+            <li>• Type a single character (like &quot;h&quot;, &quot;a&quot;, &quot;n&quot;) to see immediate results</li>
             <li>• The search should trigger on every character, not just after 2+ characters</li>
             <li>• Try different single characters to see various results</li>
             <li>• The debounce time is reduced to 150ms for faster response</li>
@@ -105,7 +105,7 @@ const SingleCharacterTest: React.FC = () => {
           <div className="text-sm text-purple-800 space-y-1">
             <p>• Changed minimum search length from 2 to 1 character</p>
             <p>• Reduced debounce time from 300ms to 150ms for faster response</p>
-            <p>• Updated "No addresses found" condition to show after 1 character</p>
+            <p>• Updated &quot;No addresses found&quot; condition to show after 1 character</p>
             <p>• Improved mock data filtering to work with single characters</p>
             <p>• All search methods (standard, website params, JSONP) now support single character search</p>
           </div>

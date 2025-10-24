@@ -52,7 +52,7 @@ const WyomingTest: React.FC = () => {
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Test Input (try "wy", "wyo", "wyoming"):
+            Test Input (try &quot;wy&quot;, &quot;wyo&quot;, &quot;wyoming&quot;):
           </label>
           <div className="flex gap-2">
             <input
@@ -127,7 +127,7 @@ const WyomingTest: React.FC = () => {
         {results.length === 0 && !loading && !error && (
           <div className="p-4 bg-yellow-50 rounded-lg">
             <p className="text-yellow-800 text-sm">
-              No results found. Try "wy", "wyo", or "wyoming".
+              No results found. Try &quot;wy&quot;, &quot;wyo&quot;, or &quot;wyoming&quot;.
             </p>
           </div>
         )}

@@ -53,7 +53,7 @@ const BasicWorkingSolution: React.FC = () => {
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Test Input (try "k", "ku", "kutztown", "new york"):
+            Test Input (try &quot;k&quot;, &quot;ku&quot;, &quot;kutztown&quot;, &quot;new york&quot;):
           </label>
           <div className="flex gap-2">
             <input
@@ -119,7 +119,7 @@ const BasicWorkingSolution: React.FC = () => {
         {results.length === 0 && !loading && !error && (
           <div className="p-4 bg-yellow-50 rounded-lg">
             <p className="text-yellow-800 text-sm">
-              No results found. Try different inputs like "k", "ku", "kutztown", "new york", etc.
+              No results found. Try different inputs like &quot;k&quot;, &quot;ku&quot;, &quot;kutztown&quot;, &quot;new york&quot;, etc.
             </p>
           </div>
         )}
