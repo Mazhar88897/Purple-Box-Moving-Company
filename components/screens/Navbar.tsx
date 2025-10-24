@@ -11,7 +11,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600">
+    <header className="w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-700">
       <div className="container mx-auto flex h-20 items-center w-full justify-center px-2 xl:px-14">
         {/* Logo */}
         <div   className=" w-full   flex justify-between">

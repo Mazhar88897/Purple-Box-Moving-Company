@@ -671,7 +671,7 @@ const ContactPage = () => {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 text-white py-3 px-4 rounded-md  transition-colors disabled:opacity-50"
+                        className="w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-700 text-white py-3 px-4 rounded-md  transition-colors disabled:opacity-50"
                       >
                         {isLoading ? "Submitting..." : "Submit now & we will get in touch"}
                       </button>

@@ -5,12 +5,11 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowRightToLine, ArrowUpRight, Phone } from 'lucide-react'
 import Autocomplete from '@/components/ui/autocomplete'
-import { getAllCityOptions, CityOption } from '@/lib/cityData'
+import { CityOption } from '@/lib/googlePlaces'
 
 const Hero = () => {
   const [fromAddress, setFromAddress] = useState('')
   const [toAddress, setToAddress] = useState('')
-  const cityOptions = getAllCityOptions()
 
   const handleFromAddressChange = (value: string) => {
     setFromAddress(value)
@@ -29,7 +28,7 @@ const Hero = () => {
   }
 
   return (
-    <div className="relative w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 overflow-hidden min-h-screen">
+    <div className="relative w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-700 overflow-hidden min-h-screen">
       {/* Background Pattern */}
       {/* <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -67,18 +66,16 @@ const Hero = () => {
               {/* Form Fields */}
               <div className="space-y-4 mb-8">
                 <Autocomplete
-                  placeholder="Moving from address"
+                  placeholder="Enter street address (e.g., 123 Main St, New York, NY)"
                   value={fromAddress}
                   onChange={handleFromAddressChange}
                   onSelect={handleFromAddressSelect}
-                  options={cityOptions}
                 />
                 <Autocomplete
-                  placeholder="Moving to address"
+                  placeholder="Enter street address (e.g., 456 Oak Ave, Los Angeles, CA)"
                   value={toAddress}
                   onChange={handleToAddressChange}
                   onSelect={handleToAddressSelect}
-                  options={cityOptions}
                 />
               </div>
 
