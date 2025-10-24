@@ -35,7 +35,7 @@ const SimpleAPITest: React.FC = () => {
       
     } catch (err) {
       console.error('Basic API error:', err)
-      setError((err as unknown as Error).message || 'Unknown error')
+      setError(err instanceof Error ? err.message : 'Unknown error')
     } finally {
       setLoading(false)
     }
@@ -75,7 +75,7 @@ const SimpleAPITest: React.FC = () => {
       
     } catch (err) {
       console.error('Full params error:', err)
-      setError((err as unknown as Error).message || 'Unknown error')
+      setError(err instanceof Error ? err.message : 'Unknown error')
     } finally {
       setLoading(false)
     }

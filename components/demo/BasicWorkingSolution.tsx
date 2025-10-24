@@ -26,7 +26,7 @@ const BasicWorkingSolution: React.FC = () => {
       
     } catch (err) {
       console.error('Basic API error:', err)
-      setError(err.message || 'Unknown error')
+      setError(err instanceof Error ? err.message : 'Unknown error')
     } finally {
       setLoading(false)
     }

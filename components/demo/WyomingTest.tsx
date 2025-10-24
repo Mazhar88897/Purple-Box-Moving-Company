@@ -25,7 +25,7 @@ const WyomingTest: React.FC = () => {
       
     } catch (err) {
       console.error('Wyoming test error:', err)
-      setError(err.message || 'Unknown error')
+      setError(err instanceof Error ? err.message : 'Unknown error')
     } finally {
       setLoading(false)
     }

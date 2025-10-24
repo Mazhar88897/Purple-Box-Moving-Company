@@ -42,7 +42,7 @@ const URLDebugTest: React.FC = () => {
     } catch (error) {
       console.error('Error testing URL generation:', error)
       setResult({
-        error: (error as Error).message || 'Unknown error',
+        error: error instanceof Error ? error.message : 'Unknown error',
         url: 'Error occurred'
       })
     } finally {

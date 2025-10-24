@@ -24,7 +24,7 @@ const MinimalTest: React.FC = () => {
       
     } catch (error) {
       console.error('Minimal test error:', error)
-      setResult({ error: (error as Error).message || 'Unknown error' })
+      setResult({ error: error instanceof Error ? error.message : 'Unknown error' })
     } finally {
       setLoading(false)
     }
