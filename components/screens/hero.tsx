@@ -55,12 +55,13 @@ const Hero = () => {
             <div className="max-w-lg mx-auto lg:mx-0">
               {/* Main Headline */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6">
-              The best movers in NYC with the <span className="text-[#221c55]">best reviews</span>.
+              Five-star moving made simple
+   <span className="text-[#221c55]">with Purple Box</span>.
               </h1>
               
-              <p className="text-lg   text-purple-950 font-bold">Five-star moving made simple with Purple Box. Trusted by New Yorkers. Powered by Purple.</p>
+              <p className="text-lg   text-purple-950 font-bold">Affordable moving & storage services.</p>
               <p className="text-lg  text-white/90 mb-8 font-medium">
-              Reliable moving & storage at prices you’ll love.
+           
               Get your guaranteed all-inclusive quote in minutes.   </p>
 
               {/* Form Fields */}
