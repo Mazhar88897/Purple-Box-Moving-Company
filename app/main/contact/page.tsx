@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { initEmailJS, sendEmail, formatEmailData } from '@/lib/emailjs'
 import { useRouter } from 'next/navigation'
+import PriceModal from '@/components/dashboardItems/pricemodal'
+import Autocomplete from '@/components/ui/autocomplete'
 // import { toast } from 'react-hot-toast'
 // import { toast } from 'sonner'
 
@@ -79,6 +81,8 @@ const ContactPage = () => {
   const [formData, setFormData] = useState<QuoteFormData>(initialData)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showPriceModal, setShowPriceModal] = useState(false)
+  const [shouldSubmitAfterModal, setShouldSubmitAfterModal] = useState(false)
   const router = useRouter()
   // Initialize EmailJS on component mount
   useEffect(() => {
@@ -138,35 +142,9 @@ const ContactPage = () => {
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-
-    // Log complete form data before submission
-    console.log('=== FORM SUBMISSION ===')
-    console.log('Complete form data:', formData)
-    console.log('Number of stops:', formData.stops.length)
-    console.log('Stops details:', formData.stops)
-    console.log('========================')
-
+  const proceedSubmit = async () => {
     try {
-      // Validate required fields
-      if (!formData.moveDate || !formData.pickupTime || !formData.moveType || 
-          !formData.pickupAddress || !formData.dropoffAddress ||
-          !formData.firstName || !formData.lastName || !formData.phone || !formData.email ||
-          !formData.inPersonQuote || !formData.hearAboutUs) {
-        await Swal.fire({
-          title: 'Incomplete Form',
-          text: 'Please complete all required fields before submitting.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#9A4CB9',
-        })
-        setIsLoading(false)
-        return
-      }
-
-      // Format the form data for EmailJS template using the new formatEmailData function
+      setIsLoading(true)
       const emailData = formatEmailData({
         // Personal Information
         firstName: formData.firstName,
@@ -200,14 +178,11 @@ const ContactPage = () => {
       })
       
       console.log('Email data being sent:', emailData)
-      
-      // Send email using EmailJS
       const result = await sendEmail(emailData)
 
       if (result.success) {
         setShowSuccessModal(true)
         setFormData(initialData)
-        // toast.success('Email sent successfully')
         await Swal.fire({
           title: 'Email sent successfully',
           text: 'We will get back to you soon',
@@ -229,12 +204,65 @@ const ContactPage = () => {
       })
     } finally {
       setIsLoading(false)
+      setShouldSubmitAfterModal(false)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Log complete form data before submission
+    console.log('=== FORM SUBMISSION ===')
+    console.log('Complete form data:', formData)
+    console.log('Number of stops:', formData.stops.length)
+    console.log('Stops details:', formData.stops)
+    console.log('========================')
+
+    try {
+      // Validate required fields
+      if (!formData.moveDate || !formData.pickupTime || !formData.moveType || 
+          !formData.pickupAddress || !formData.dropoffAddress ||
+          !formData.firstName || !formData.lastName || !formData.phone || !formData.email ||
+          !formData.inPersonQuote || !formData.hearAboutUs) {
+        await Swal.fire({
+          title: 'Incomplete Form',
+          text: 'Please complete all required fields before submitting.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#9A4CB9',
+        })
+        return
+      }
+
+      // Open price modal first and defer sending until it is closed
+      setShouldSubmitAfterModal(true)
+      setShowPriceModal(true)
+    } catch (error) {
+      await Swal.fire({
+        title: 'Error!',
+        text: error instanceof Error ? error.message : 'Submission failed. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#9A4CB9',
+      })
     }
   }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
+        <PriceModal
+          open={showPriceModal}
+          onClose={() => {
+            setShowPriceModal(false)
+            if (shouldSubmitAfterModal) {
+              void proceedSubmit()
+            }
+          }}
+          fromDestination={formData.pickupAddress}
+          toDestination={formData.dropoffAddress}
+          moveType={formData.moveType}
+        />
         {/* Header */}
         <div className=" mb-8">
           <h1 className="text-3xl  font-bold text-gray-900 mb-4">
@@ -317,14 +345,12 @@ const ContactPage = () => {
             </p>
             <div className="space-y-4">
               <div>
-                <input
-                  type="text"
-                  name="pickupAddress"
-                  value={formData.pickupAddress}
-                  onChange={handleChange}
+                <Autocomplete
                   placeholder="Enter pickup address"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
+                  value={formData.pickupAddress}
+                  onChange={(val) => setFormData((prev) => ({ ...prev, pickupAddress: val }))}
+                  onSelect={(opt) => setFormData((prev) => ({ ...prev, pickupAddress: opt.fullAddress }))}
+                  className="w-full"
                 />
               </div>
               <div>
@@ -335,7 +361,7 @@ const ContactPage = () => {
                   name="pickupAccessType"
                   value={formData.pickupAccessType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Choose an option</option>
                   <option value="ground-floor">Ground Floor</option>
@@ -384,14 +410,12 @@ const ContactPage = () => {
             </p>
             <div className="space-y-4">
               <div>
-                <input
-                  type="text"
-                  name="dropoffAddress"
-                  value={formData.dropoffAddress}
-                  onChange={handleChange}
+                <Autocomplete
                   placeholder="Enter dropoff address"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
+                  value={formData.dropoffAddress}
+                  onChange={(val) => setFormData((prev) => ({ ...prev, dropoffAddress: val }))}
+                  onSelect={(opt) => setFormData((prev) => ({ ...prev, dropoffAddress: opt.fullAddress }))}
+                  className="w-full"
                 />
               </div>
               <div>
@@ -402,7 +426,7 @@ const ContactPage = () => {
                   name="dropoffAccessType"
                   value={formData.dropoffAccessType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Choose an option</option>
                   <option value="ground-floor">Ground Floor</option>
