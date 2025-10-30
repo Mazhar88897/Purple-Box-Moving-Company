@@ -28,7 +28,7 @@ const Hero = () => {
   }
 
   return (
-    <div className="relative w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-700 overflow-hidden min-h-screen">
+    <div className="relative w-full bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-700 overflow-hidden h-full py-5">
       {/* Background Pattern */}
       {/* <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -37,30 +37,29 @@ const Hero = () => {
       </div> */}
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-10 items-center h-full">
           
           {/* Left Side - Visual Content with Moving Boxes */}
-          <div className="relative order-2 lg:order-1">
-            <div className="relative">
-              <img src="/hro.png" alt="moving background" className="w-full h-full object-cover rounded-lg" />
+          <div className="relative order-2 lg:order-1 w-full lg:w-1/2">
+            <div className="relative h-full">
+              <img src="/bb.png" alt="moving background" className="w-full h-full object-cover rounded-lg" />
               
               {/* Decorative Elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+              
             </div>
           </div>
 
           {/* Right Side - Text and Form */}
-          <div className="order-1 lg:order-2 text-white">
+          <div className="order-1 lg:order-2 text-white w-full lg:w-1/2">
             <div className="max-w-lg mx-auto lg:mx-0">
               {/* Main Headline */}
-              <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              <h1 className="text-5xl font-bold leading-tight mb-2">
               Five-star moving made simple
-   <span className="text-[#221c55]">with Purple Box</span>.
+   <span className="text-[#221c55] ml-2">with Purple Box</span>.
               </h1>
               
-              <p className="text-xl   text-purple-950 font-bold">Affordable moving & storage services.</p>
-              <p className="text-xl  text-white/90 mb-8 font-medium">
+              <p className="text-xl   text-white font-bold">Affordable moving & storage services.</p>
+              <p className="text-xl  text-gray-200  mb-8 font-medium">
            
               Get your guaranteed all-inclusive quote in minutes.   </p>
 
