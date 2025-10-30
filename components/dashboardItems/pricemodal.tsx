@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 type PriceLineItem = {
   label: string
@@ -134,6 +134,7 @@ export type PriceModalProps = {
   toDestination: string
   moveType?: string
   moversCountOverride?: number
+  useAI?: boolean
 }
 
 export default function PriceModal({
@@ -143,6 +144,7 @@ export default function PriceModal({
   toDestination,
   moveType,
   moversCountOverride,
+  useAI,
 }: PriceModalProps) {
   const inferredMovers = useMemo(() => {
     if (typeof moversCountOverride === "number" && moversCountOverride > 0) return moversCountOverride
@@ -165,6 +167,69 @@ export default function PriceModal({
   const [isOpen, setIsOpen] = useState(open)
   if (isOpen !== open) setIsOpen(open)
 
+  // AI estimate integration
+  const [aiResult, setAiResult] = useState<PriceResult | null>(null)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [aiError, setAiError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!canEstimate || !useAI) {
+      setAiResult(null)
+      setAiError(null)
+      setAiLoading(false)
+      return
+    }
+
+    const endpoint = "https://api.openai.com/v1/responses"
+
+    const controller = new AbortController()
+    setAiLoading(true)
+    setAiError(null)
+
+    const prompt = `Return JSON only. Fields: items[ {label, amount:number} ], total:number, notes:string[].
+Given: from=${fromDestination}, to=${toDestination}, movers=${inferredMovers}, moveType=${moveType || ""}.
+Use reasonable NYC/NJ local move pricing heuristics. No prose.`
+
+    const token = process.env.OPENAI_API_KEY
+
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({
+        model: "gpt-4.1-mini",
+        input: prompt,
+        response_format: { type: "json_object" },
+        temperature: 0.2,
+      }),
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const data = await res.json()
+        // OpenAI Responses API returns structured output under output[0].content[0].text
+        const text = data?.output?.[0]?.content?.[0]?.text || "{}"
+        const json = JSON.parse(text)
+        const parsed: PriceResult = {
+          items: Array.isArray(json?.items) ? json.items : [],
+          total: typeof json?.total === "number" ? json.total : 0,
+          notes: Array.isArray(json?.notes) ? json.notes : [],
+        }
+        setAiResult(parsed)
+      })
+      .catch((err: any) => {
+        if (err?.name === "AbortError") return
+        setAiError(err?.message || "AI estimate failed")
+      })
+      .finally(() => setAiLoading(false))
+
+    return () => controller.abort()
+  }, [canEstimate, useAI, fromDestination, toDestination, inferredMovers, moveType])
+
+  const displayResult = aiResult || result
+
   if (!open) return null
 
   return (
@@ -181,10 +246,10 @@ export default function PriceModal({
             <div><span className="font-medium text-gray-800">To:</span> {toDestination || "—"}</div>
             <div><span className="font-medium text-gray-800">Movers:</span> {inferredMovers}</div>
           </div>
-          {result ? (
+          {displayResult ? (
             <div className="space-y-2">
               <ul className="divide-y divide-gray-100 border border-gray-100 rounded-md">
-                {result.items.map((it) => (
+                {displayResult.items.map((it) => (
                   <li key={it.label} className="flex items-center justify-between p-3 text-sm">
                     <span className="text-gray-700">{it.label}</span>
                     <span className="font-medium text-gray-900">${it.amount.toLocaleString()}</span>
@@ -193,18 +258,27 @@ export default function PriceModal({
               </ul>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-base font-semibold text-gray-900">Estimated total</span>
-                <span className="text-base font-bold text-purple-700">${result.total.toLocaleString()}</span>
+                <span className="text-base font-bold text-purple-700">${displayResult.total.toLocaleString()}</span>
               </div>
-              {result.notes?.length ? (
+              {displayResult.notes?.length ? (
                 <div className="mt-2 text-xs text-gray-500 space-y-1">
                   <div className="font-medium text-gray-700">Notes</div>
                   <ul className="list-disc pl-5">
-                    {result.notes.map((n, i) => (
+                    {displayResult.notes.map((n, i) => (
                       <li key={i}>{n}</li>
                     ))}
                   </ul>
                 </div>
               ) : null}
+              <div className="mt-2 flex items-center gap-2 text-xs">
+                {useAI ? (
+                  <span className="inline-flex items-center rounded bg-purple-50 px-2 py-1 text-purple-700 border border-purple-100">AI estimate</span>
+                ) : (
+                  <span className="inline-flex items-center rounded bg-gray-50 px-2 py-1 text-gray-700 border border-gray-100">Quick estimate</span>
+                )}
+                {aiLoading ? <span className="text-gray-500">Fetching...</span> : null}
+                {aiError ? <span className="text-red-600">{aiError}</span> : null}
+              </div>
               <p className="mt-3 text-sm text-gray-600">
                 This is an estimate based on provided addresses. Please wait for exact confirmation.
               </p>
@@ -215,7 +289,7 @@ export default function PriceModal({
         </div>
         <div className="mt-6 flex justify-end">
           <button onClick={onClose} className="inline-flex items-center px-4 py-2 rounded-md bg-purple-600 text-white hover:bg-purple-700">
-            Close
+            Submit
           </button>
         </div>
       </div>
