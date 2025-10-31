@@ -87,6 +87,22 @@ const ContactPage = () => {
   // Initialize EmailJS on component mount
   useEffect(() => {
     initEmailJS()
+    // Load addresses from sessionStorage if available
+    const toAddress = sessionStorage.getItem('toAddress')
+    const fromAddress = sessionStorage.getItem('fromAddress')
+    if (toAddress || fromAddress) {
+      setFormData((prev) => {
+        const updated = { ...prev }
+        // Only set if fields are empty
+        if (toAddress && !prev.dropoffAddress) {
+          updated.dropoffAddress = toAddress
+        }
+        if (fromAddress && !prev.pickupAddress) {
+          updated.pickupAddress = fromAddress
+        }
+        return updated
+      })
+    }
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -145,6 +161,9 @@ const ContactPage = () => {
   const proceedSubmit = async () => {
     try {
       setIsLoading(true)
+      // Get addresses from sessionStorage if form fields are not set
+      const dropoffAddress = formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''
+      const pickupAddress = formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''
       const emailData = formatEmailData({
         // Personal Information
         firstName: formData.firstName,
@@ -158,14 +177,14 @@ const ContactPage = () => {
         moveType: formData.moveType,
         inPersonQuote: formData.inPersonQuote,
         
-        // Pickup Address Details
-        pickupAddress: formData.pickupAddress,
+        // Pickup Address Details - use sessionStorage if formData doesn't have it
+        pickupAddress: pickupAddress,
         pickupAccessType: formData.pickupAccessType,
         pickupDoorman: formData.pickupDoorman,
         pickupCOI: formData.pickupCOI,
         
-        // Dropoff Address Details
-        dropoffAddress: formData.dropoffAddress,
+        // Dropoff Address Details - use sessionStorage if formData doesn't have it
+        dropoffAddress: dropoffAddress,
         dropoffAccessType: formData.dropoffAccessType,
         dropoffDoorman: formData.dropoffDoorman,
         dropoffCOI: formData.dropoffCOI,
@@ -219,9 +238,11 @@ const ContactPage = () => {
     console.log('========================')
 
     try {
-      // Validate required fields
+      // Validate required fields - check sessionStorage for addresses if not in formData
+      const dropoffAddress = formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''
+      const pickupAddress = formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''
       if (!formData.moveDate || !formData.pickupTime || !formData.moveType || 
-          !formData.pickupAddress || !formData.dropoffAddress ||
+          !pickupAddress || !dropoffAddress ||
           !formData.firstName || !formData.lastName || !formData.phone || !formData.email ||
           !formData.inPersonQuote || !formData.hearAboutUs) {
         await Swal.fire({
@@ -259,8 +280,8 @@ const ContactPage = () => {
               void proceedSubmit()
             }
           }}
-          fromDestination={formData.pickupAddress}
-          toDestination={formData.dropoffAddress}
+          fromDestination={formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''}
+          toDestination={formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''}
           moveType={formData.moveType}
         />
         {/* Header */}
