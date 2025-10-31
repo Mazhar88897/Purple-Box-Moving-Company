@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Strip = () => {
@@ -24,11 +25,12 @@ const Strip = () => {
 
           {/* CTA Button */}
           <div className="flex-shrink-0">
-            <button
-            className="inline-flex items-center justify-center rounded-md bg-[#38004e] px-5 py-2.5 text-white text-xs sm:text-sm font-extrabold shadow-sm hover:bg-[#9A4CB9]/90 transition-colors">
+            <Link href="/main/about"> 
+            <button className="inline-flex items-center justify-center rounded-md bg-[#38004e] px-5 py-2.5 text-white text-xs sm:text-sm font-extrabold shadow-sm hover:bg-[#9A4CB9]/90 transition-colors">
             LEARN MORE
             
             </button>
+            </Link>
           </div>
         </div>
       </div>

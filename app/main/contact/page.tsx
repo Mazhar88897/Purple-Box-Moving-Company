@@ -184,7 +184,7 @@ const ContactPage = () => {
         setShowSuccessModal(true)
         setFormData(initialData)
         await Swal.fire({
-          title: 'Email sent successfully',
+          title: 'We received your application',
           text: 'We will get back to you soon',
           icon: 'success',
           confirmButtonText: 'OK',
@@ -347,7 +347,7 @@ const ContactPage = () => {
               <div>
                 <Autocomplete
                   placeholder="Enter pickup address"
-                  value={formData.pickupAddress}
+                  value={formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''}
                   onChange={(val) => setFormData((prev) => ({ ...prev, pickupAddress: val }))}
                   onSelect={(opt) => setFormData((prev) => ({ ...prev, pickupAddress: opt.fullAddress }))}
                   className="w-full"
@@ -412,7 +412,7 @@ const ContactPage = () => {
               <div>
                 <Autocomplete
                   placeholder="Enter dropoff address"
-                  value={formData.dropoffAddress}
+                  value={ formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''}
                   onChange={(val) => setFormData((prev) => ({ ...prev, dropoffAddress: val }))}
                   onSelect={(opt) => setFormData((prev) => ({ ...prev, dropoffAddress: opt.fullAddress }))}
                   className="w-full"

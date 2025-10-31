@@ -83,24 +83,20 @@ const Hero = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 {/* GET QUOTE Button */}
                 <Link href="/main/contact" className="inline-flex items-center gap-2 rounded-md bg-[#221c55] px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm hover:bg-[#1a1645]">
-            GET QUOTE <ArrowUpRight className="h-4 w-4" />
-            
-          </Link>
-
-                {/* Phone CTA */}
-                <Link href="/main/contact" className="flex items-center space-x-2 text-white hover:text-white/80 transition-colors duration-200">
-                  <Phone className="w-5 h-5" />
-                  <span className="text-sm font-medium">Or get a call from us</span>
-                </Link>
+                  <button onClick={() => {
+                  sessionStorage.setItem('fromAddress', fromAddress);
+                  sessionStorage.setItem('toAddress', toAddress);
+                  
+                }} className="flex gap-1"> GET QUOTE <ArrowUpRight className="h-4 w-4" />
+                </button> </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
-
-export default Hero
+  );
+};
+export default Hero;
 
 

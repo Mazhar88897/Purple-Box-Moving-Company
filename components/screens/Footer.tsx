@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
 
           {/* Middle Column - Links */}
-          <div className="space-y-4 md:col-span-1">
+          <div className="space-y-4 md:col-span-2">
             <h3 className="text-2xl font-semibold mb-6">Links</h3>
             <nav className="flex flex-col space-y-2">
               <Link href="/main/about" className="hover:underline">
@@ -46,24 +46,24 @@ export default function Footer() {
           </div>
 
           {/* Right Column - Social Media */}
-          <div className="space-y-4 md:col-span-1">
-            <h3 className="text-2xl font-semibold mb-6">Social Media</h3>
-            <nav className="flex flex-col space-y-2">
-              <Link href="https://www.instagram.com/purpleboxmovers/" target="_blank" className="hover:underline flex items-center gap-2">
-                <Instagram size={18} />
-                Instagram
-              </Link>
-              <Link href="https://www.youtube.com/@purpleboxmovers" target="_blank" className="hover:underline flex items-center gap-2">
-                <Youtube size={18} />
-                Youtube
-              </Link>
-              <Link href="https://www.facebook.com/people/Purple-Box-Moving-Company/61580275702236/?mibextid=wwXIfr&rdid=MDmbFUPLWMc7KyfK&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1GUA1ctTp7%2F%3Fmibextid%3DwwXIfr" target="_blank" className="hover:underline flex items-center gap-2">
-                <Facebook size={18} />
-                Facebook
-              </Link>
-            
-            </nav>
-          </div>
+            {/* <div className="space-y-4 md:col-span-1">
+              <h3 className="text-2xl font-semibold mb-6">Social Media</h3>
+              <nav className="flex flex-col space-y-2">
+                <Link href="https://www.instagram.com/purpleboxmovers/" target="_blank" className="hover:underline flex items-center gap-2">
+                  <Instagram size={18} />
+                  Instagram
+                </Link>
+                <Link href="https://www.youtube.com/@purpleboxmovers" target="_blank" className="hover:underline flex items-center gap-2">
+                  <Youtube size={18} />
+                  Youtube
+                </Link>
+                <Link href="https://www.facebook.com/people/Purple-Box-Moving-Company/61580275702236/?mibextid=wwXIfr&rdid=MDmbFUPLWMc7KyfK&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1GUA1ctTp7%2F%3Fmibextid%3DwwXIfr" target="_blank" className="hover:underline flex items-center gap-2">
+                  <Facebook size={18} />
+                  Facebook
+                </Link>
+              
+              </nav>
+            </div> */}
         </div>
 
         {/* Bottom Divider and Copyright */}
