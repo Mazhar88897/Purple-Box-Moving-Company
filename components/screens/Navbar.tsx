@@ -16,8 +16,8 @@ export default function Navbar() {
         {/* Logo */}
         <div   className=" w-full   flex justify-between">
         <div className="flex items-center">
-          <Link href="/" className="flex flex-col">
-            <div className="relative w-[80px] sm:w-[150px] h-[60px]">
+          <Link href="/" className="flex items-center justify-center bg-white rounded-full p-3 w-16 h-16">
+            <div className="relative w-full h-full">
               <Image src="/box.png" alt="Logo" fill className="object-contain" />
             </div>
           </Link>
@@ -43,7 +43,7 @@ export default function Navbar() {
         </nav>
 
         {/* Right CTAs */}
-        <div className="hidden md:flex items-end gap-4 xl:gap-6  mt-3 mx-0 xl:mx-4">
+        <div className="hidden lg:flex items-end gap-4 xl:gap-6  mt-3 mx-0 xl:mx-4">
           <div className="flex flex-col items-center">
           <Link href="/main/contact" className="inline-flex items-center gap-2 rounded-md bg-[#221c55] px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm hover:bg-[#1a1645]">
             Instant Price <ArrowUpRight className="h-4 w-4" />
@@ -53,10 +53,7 @@ export default function Navbar() {
        
 
           </div>
-          <div className="hidden md:flex 2xl:hidden  flex-col items-center align-center h-full py-3">
-            <Phone className="h-4 w-4 text-white" stroke-width={4} />
-            {/* <span className="text-[10px] font-bold tracking-wide text-white/90">7 days a week 7AM-9PM</span> */}
-          </div>
+       
                
           <div className=" hidden 2xl:flex  flex-col items-center   ">
             <a href="tel:+12126517273" className="inline-flex items-center gap-2 rounded-md bg-[#221c55] px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm hover:bg-[#1a1645]">
