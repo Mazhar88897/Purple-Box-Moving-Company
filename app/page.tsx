@@ -26,6 +26,7 @@ import Strip from "@/components/screens/strip"
 import Insta from "@/components/screens/insta"
 import SpecialService from "@/components/screens/special"
 import SecondService from "@/components/screens/secondService"
+import VideoPurple from "@/components/dashboardItems/videopurple"
 
 export default function Home() {
   return (
@@ -35,6 +36,10 @@ export default function Home() {
       <Hero />
       <MediaReviews />
       <AwardsSlider />  
+
+      <>
+      <VideoPurple   />
+      </>
 
 
 
