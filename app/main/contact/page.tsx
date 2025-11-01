@@ -88,8 +88,8 @@ const ContactPage = () => {
   useEffect(() => {
     initEmailJS()
     // Load addresses from sessionStorage if available
-    const toAddress = sessionStorage.getItem('toAddress')
-    const fromAddress = sessionStorage.getItem('fromAddress')
+    const toAddress = (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : '') || ''
+    const fromAddress = (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : '') || ''
     if (toAddress || fromAddress) {
       setFormData((prev) => {
         const updated = { ...prev }
@@ -162,8 +162,8 @@ const ContactPage = () => {
     try {
       setIsLoading(true)
       // Get addresses from sessionStorage if form fields are not set
-      const dropoffAddress = formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''
-      const pickupAddress = formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''
+      const dropoffAddress = formData.dropoffAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : '') || ''
+      const pickupAddress = formData.pickupAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : '') || ''
       const emailData = formatEmailData({
         // Personal Information
         firstName: formData.firstName,
@@ -280,8 +280,8 @@ const ContactPage = () => {
               void proceedSubmit()
             }
           }}
-          fromDestination={formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''}
-          toDestination={formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''}
+          fromDestination={formData.pickupAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : ' ' as string ) || ''}
+          toDestination={formData.dropoffAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : ' ' as string      ) || ''}
           moveType={formData.moveType}
         />
         {/* Header */}
@@ -368,7 +368,7 @@ const ContactPage = () => {
               <div>
                 <Autocomplete
                   placeholder="Enter pickup address"
-                  value={formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''}
+                  value={formData.pickupAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : ' ' as string) || ''}
                   onChange={(val) => setFormData((prev) => ({ ...prev, pickupAddress: val }))}
                   onSelect={(opt) => setFormData((prev) => ({ ...prev, pickupAddress: opt.fullAddress }))}
                   className="w-full"
@@ -433,7 +433,7 @@ const ContactPage = () => {
               <div>
                 <Autocomplete
                   placeholder="Enter dropoff address"
-                  value={ formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''}
+                  value={ formData.dropoffAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : ' ' as string) || ''}
                   onChange={(val) => setFormData((prev) => ({ ...prev, dropoffAddress: val }))}
                   onSelect={(opt) => setFormData((prev) => ({ ...prev, dropoffAddress: opt.fullAddress }))}
                   className="w-full"
