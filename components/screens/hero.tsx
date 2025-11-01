@@ -13,10 +13,12 @@ const Hero = () => {
 
   const handleFromAddressChange = (value: string) => {
     setFromAddress(value)
+    sessionStorage.setItem('fromAddress', value);
   }
 
   const handleToAddressChange = (value: string) => {
     setToAddress(value)
+    sessionStorage.setItem('toAddress', value);
   }
 
   const handleFromAddressSelect = (option: CityOption) => {
