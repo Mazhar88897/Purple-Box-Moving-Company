@@ -178,10 +178,10 @@ function Component() {
               If you have any questions about this Privacy Policy or our data practices, please contact us at:
             </p>
             <ul className="list-disc ml-6 space-y-2">
-              <li><strong>Email:</strong> ldc.co@mail.ru</li>
+              <li><strong>Email:</strong> move@purpleboxco.com</li>
               <li><strong>Phone:</strong> +1 (332)2835813‬</li>
               <li><strong>Company Name:</strong> Purple Box Moving Company</li>
-              <li><strong>Address:</strong> DAN LUNELL CORPORATION, 418 Broadway Ste Y, Albany, NY 12207</li>
+              <li><strong>Address:</strong> 669 Bergen ave, Jersey city, NJ 07304</li>
             </ul>
           </section>
 

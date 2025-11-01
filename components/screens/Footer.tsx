@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
 
           {/* Middle Column - Links */}
-          <div className="space-y-4 md:col-span-2">
+          <div className="space-y-4 md:col-span-2 ">
             <h3 className="text-2xl font-semibold mb-6">Links</h3>
             <nav className="flex flex-col space-y-2">
               <Link href="/main/about" className="hover:underline">
@@ -74,8 +74,8 @@ export default function Footer() {
             </div>
             <div className="flex flex-col items-center md:items-start space-y-1">
               <p className="text-sm mb-1 md:mb-0 inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"><Phone className="w-4 h-4 md:w-[18px] hidden md:block md:h-[18px]" /> +1 (332)2835813‬</p>
-              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"> <MapPin className="w-4 h-4 md:w-[18px] md:h-[18px] hidden md:block  " /> DAN LUNELL CORPORATION, 418 Broadway Ste Y, Albany, NY 12207</p>
-              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"> <Mail className="w-4 h-4 md:w-[18px] md:h-[18px] hidden md:block  " /> ldc.co@mail.ru </p>
+              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"> <MapPin className="w-4 h-4 md:w-[18px] md:h-[18px] hidden md:block  " /> 669 Bergen ave, Jersey city, NJ 07304</p>
+              <p className="text-sm inline-flex items-center gap-2 justify-center md:justify-start px-[5px] md:px-0"> <Mail className="w-4 h-4 md:w-[18px] md:h-[18px] hidden md:block  " /> move@purpleboxco.com </p>
             </div>
             <div className="space-y-1 md:space-y-0"> 
               <p className="text-sm font-bold mb-1 md:mb-0">Purple Box Moving Company </p>

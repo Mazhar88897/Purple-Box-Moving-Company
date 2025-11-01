@@ -140,7 +140,7 @@ function Component() {
               <li>
                 <strong>Contact Information:</strong> For questions about these Terms and Conditions, please contact us at:
                 <ul className="list-disc ml-6 mt-2 space-y-1">
-                  <li><strong>Email:</strong> ldc.co@mail.ru</li>
+                  <li><strong>Email:</strong> move@purpleboxco.com</li>
                   <li><strong>Phone:</strong> +1 (332)2835813‬</li>
                   <li><strong>Company:</strong> Purple Box Moving Company</li>
                 </ul>

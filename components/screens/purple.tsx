@@ -25,7 +25,7 @@ export default function Purple() {
             href="mailto:coi@purplebox.com"
             className="inline-block mt-2 text-md font-semibold text-[#9A4CB9] underline decoration-[#9A4CB9]/40 underline-offset-4 hover:text-[#9A4CB9]"
           >
-            {/* Ldc.co@mail.ru */}
+            {/* move@purpleboxco.com */}
           </a>
         </div>
         <div className="md:col-span-2 space-y-6 mx-4">
