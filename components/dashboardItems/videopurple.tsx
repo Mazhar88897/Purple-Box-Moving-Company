@@ -4,15 +4,45 @@ import React, { useRef, useEffect } from 'react'
 
 const VideoPurple = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      // Enable looping
-      video.loop = true
-      // Disable fullscreen
-      video.setAttribute('controlsList', 'nofullscreen')
-      video.setAttribute('disablePictureInPicture', 'true')
+    const container = containerRef.current
+    
+    if (!video || !container) return
+
+    // Enable looping
+    video.loop = true
+    // Disable fullscreen
+    video.setAttribute('controlsList', 'nofullscreen')
+    video.setAttribute('disablePictureInPicture', 'true')
+
+    // Intersection Observer to detect when video is in viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video is in view, play it
+            video.play().catch((error) => {
+              console.log('Video play failed:', error)
+            })
+          } else {
+            // Video is out of view, pause it
+            video.pause()
+          }
+        })
+      },
+      {
+        threshold: 0.5, // Play when at least 50% of video is visible
+      }
+    )
+
+    observer.observe(container)
+
+    // Cleanup
+    return () => {
+      observer.disconnect()
     }
   }, [])
 
@@ -22,11 +52,10 @@ const VideoPurple = () => {
 
   return (
     <div className="w-full flex justify-center items-center py-8 px-4">
-      <div className="relative w-full md:w-[80%]">
+      <div ref={containerRef} className="relative w-full md:w-[80%]">
         <div className="relative z-10 overflow-hidden rounded-xl">
           <video
             ref={videoRef}
-            autoPlay
             loop
             muted
             playsInline
