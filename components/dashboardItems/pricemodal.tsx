@@ -80,6 +80,7 @@ function computeEstimate(
 
   const cityFrom = extractCity(fromDestination)
   const cityTo = extractCity(toDestination)
+
   const isNYC = [
     "nyc",
     "new york",
@@ -89,6 +90,8 @@ function computeEstimate(
     "staten island",
     "long island",
   ].some((c) => cityFrom.includes(c) || cityTo.includes(c))
+
+
   const isJersey = ["jersey city", "hoboken", "newark"].some(
     (c) => cityFrom.includes(c) || cityTo.includes(c)
   )
@@ -288,13 +291,17 @@ Use reasonable NYC/NJ local move pricing heuristics. No prose.`
           )}
         </div>
         <div className="mt-6 flex justify-end">
-          <button onClick={onClose} className="inline-flex items-center px-4 py-2 rounded-md bg-purple-600 text-white hover:bg-purple-700">
+          <button 
+            onClick={() => {
+              const price = displayResult?.total.toString() || '0';
+              sessionStorage.setItem('price', price);
+              onClose();
+            }} 
+            className="inline-flex items-center px-4 py-2 rounded-md bg-purple-600 text-white hover:bg-purple-700"
+          >
             Submit
           </button>
-        </div>
-      </div>
+      </div>  </div>
     </div>
-  )
+  );
 }
-
-

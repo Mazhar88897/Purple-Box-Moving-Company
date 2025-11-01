@@ -108,13 +108,17 @@ export const formatEmailData = (formData: {
 }) => {
   const stopsTableHTML = formData.stops ? generateStopsTableHTML(formData.stops) : '<p>No additional stops</p>';
   
+  // Get price from sessionStorage (set by price modal)
+  const storedPrice = typeof window !== 'undefined' ? sessionStorage.getItem('price') : null;
+  
   return {
     // Personal Information
+    price: storedPrice || '0',
     first_name: formData.firstName,
     last_name: formData.lastName,
     email: formData.email,
     phone_number: formData.phone,
-    
+
     // Moving Information
     move_date: formData.moveDate,
     preferred_pickup_time: formData.pickupTime,
@@ -133,6 +137,7 @@ export const formatEmailData = (formData: {
     
     // Additional Information
     message: formData.message || '',
+
     
     // Stops Information
     additional_stops: stopsTableHTML,

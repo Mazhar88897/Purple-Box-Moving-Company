@@ -239,8 +239,8 @@ const ContactPage = () => {
 
     try {
       // Validate required fields - check sessionStorage for addresses if not in formData
-      const dropoffAddress = formData.dropoffAddress || sessionStorage.getItem('toAddress') || ''
-      const pickupAddress = formData.pickupAddress || sessionStorage.getItem('fromAddress') || ''
+      const dropoffAddress = formData.dropoffAddress ||  (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : '') || ''
+      const pickupAddress = formData.pickupAddress ||  (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : '') || ''
       if (!formData.moveDate || !formData.pickupTime || !formData.moveType || 
           !pickupAddress || !dropoffAddress ||
           !formData.firstName || !formData.lastName || !formData.phone || !formData.email ||
@@ -341,7 +341,7 @@ const ContactPage = () => {
                   name="moveType"
                   value={formData.moveType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                   required
                 >
                   <option value="">Choose an option</option>
@@ -382,7 +382,7 @@ const ContactPage = () => {
                   name="pickupAccessType"
                   value={formData.pickupAccessType}
                   onChange={handleChange}
-                  className="w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-[300px] sm:w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Choose an option</option>
                   <option value="ground-floor">Ground Floor</option>
@@ -447,7 +447,7 @@ const ContactPage = () => {
                   name="dropoffAccessType"
                   value={formData.dropoffAccessType}
                   onChange={handleChange}
-                  className="w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-[300px] sm:w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Choose an option</option>
                   <option value="ground-floor">Ground Floor</option>
