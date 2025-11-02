@@ -14,9 +14,34 @@ const VideoPurple = () => {
 
     // Enable looping
     video.loop = true
+    // Mute video for autoplay (browsers require muted videos for autoplay)
+
     // Disable fullscreen
     video.setAttribute('controlsList', 'nofullscreen')
     video.setAttribute('disablePictureInPicture', 'true')
+
+    // Function to try playing the video
+    const playVideo = async () => {
+      try {
+        // Ensure video is muted for autoplay policies
+       
+        await video.play()
+      } catch (error) {
+        console.log('Video play failed:', error)
+      }
+    }
+
+    // Check if video is already in viewport on mount
+    const checkInitialView = () => {
+      const rect = container.getBoundingClientRect()
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0
+      if (isInView) {
+        playVideo()
+      }
+    }
+
+    // Try to play immediately if in viewport
+    checkInitialView()
 
     // Intersection Observer to detect when video is in viewport
     const observer = new IntersectionObserver(
@@ -24,9 +49,7 @@ const VideoPurple = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // Video is in view, play it
-            video.play().catch((error) => {
-              console.log('Video play failed:', error)
-            })
+            playVideo()
           } else {
             // Video is out of view, pause it
             video.pause()
@@ -34,7 +57,8 @@ const VideoPurple = () => {
         })
       },
       {
-        threshold: 0.5, // Play when at least 50% of video is visible
+        threshold: 0.1, // Play when at least 10% of video is visible
+        rootMargin: '50px', // Start loading slightly before video enters viewport
       }
     )
 
@@ -57,10 +81,11 @@ const VideoPurple = () => {
           <video
             ref={videoRef}
             loop
-            muted
+            autoPlay
+            
             playsInline
             controls
-            controlsList="nodownload nofullscreen noremoteplayback"
+            controlsList="nodownload  nofullscreen noremoteplayback"
             disablePictureInPicture
             onContextMenu={handleContextMenu}
             className="w-full h-auto object-cover"

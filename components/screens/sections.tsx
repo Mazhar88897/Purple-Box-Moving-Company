@@ -9,7 +9,7 @@ const Sections = () => {
           <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/pic1.png"
+                src="/777.png"
                 alt="Storage service"
                 className="h-full w-full object-cover"
               />
@@ -48,7 +48,7 @@ const Sections = () => {
            <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/pic2.png"
+                src="/666.png"
                 alt="Packing service"
                 className="h-full w-full object-cover"
               />

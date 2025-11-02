@@ -34,7 +34,7 @@ const SpecialService = () => {
           <div className="relative w-full md:w-3/4">
             <div className="relative z-10 overflow-hidden rounded-xl">
               <img
-                src="/pic2.png"
+                src="/5555.png"
                 alt="Storage service"
                 className="h-full w-full object-cover"
               />
