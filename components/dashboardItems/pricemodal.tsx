@@ -61,41 +61,94 @@ function estimateHours(fromAddr: string, toAddr: string, moversCount: number): n
   return Math.max(2, Math.min(10, hours))
 }
 
-function computeEstimate(
+export type PackingData = {
+  needsPacking?: string
+  roomSize?: string
+  numberOfBoxes?: string
+  furnitureBed?: boolean
+  furnitureSofa?: boolean
+  furnitureCloset?: boolean
+  furnitureBoxes?: boolean
+  additionalFurniture?: string[]
+  customFurnitureItems?: string[]
+}
+
+export type ComplexItemsData = {
+  complexItemsList?: string[]
+}
+
+export function computeEstimate(
   fromDestination: string,
   toDestination: string,
-  moversCount: number
+  moversCount: number,
+  packingData?: PackingData,
+  complexItemsData?: ComplexItemsData
 ): PriceResult {
   const BASE_RATE_PER_2_MOVERS_PER_HOUR = 120
   const PACKING_RATE_PER_MOVER_PER_HOUR = 40
   const WRAP_FEE_FLAT = 40
-  const COMPLEX_ITEMS_COUNT = 0
   const COMPLEX_ITEM_FEE = 40
+  const BOX_PACKING_RATE = 5 // per box if already packed
+  
+  // Calculate complex items count
+  const complexItemsList = complexItemsData?.complexItemsList || []
+  const COMPLEX_ITEMS_COUNT = complexItemsList.filter(item => item.trim().length > 0).length
 
   const derivedHours = estimateHours(fromDestination, toDestination, moversCount)
   const multiplier = Math.max(1, Math.round(moversCount / 2))
   const baseMove = BASE_RATE_PER_2_MOVERS_PER_HOUR * multiplier * derivedHours
-  const packing = moversCount * PACKING_RATE_PER_MOVER_PER_HOUR * derivedHours
+  
+  // Calculate packing costs based on user selection
+  let packing = 0
+  let packingLabel = ""
+  
+  if (packingData?.needsPacking === "yes") {
+    // User needs packing - calculate based on room size
+    const roomSize = packingData.roomSize || ""
+    let estimatedBoxes = 0
+    
+    switch (roomSize) {
+      case "1-bedroom":
+        estimatedBoxes = 35 // average of 30-40
+        break
+      case "2-bedroom":
+        estimatedBoxes = 45 // average of 40-50
+        break
+      case "3+-bedroom":
+        estimatedBoxes = 60 // average of 50-70
+        break
+      case "large-house":
+        estimatedBoxes = 80 // 70+
+        break
+      default:
+        estimatedBoxes = 40 // default
+    }
+    
+    // Adjust based on furniture count
+    let furnitureMultiplier = 1
+    if (packingData.furnitureBed) furnitureMultiplier += 0.1
+    if (packingData.furnitureSofa) furnitureMultiplier += 0.15
+    if (packingData.furnitureCloset) furnitureMultiplier += 0.1
+    const additionalFurnitureCount = (packingData.additionalFurniture?.length || 0) + (packingData.customFurnitureItems?.filter(Boolean).length || 0)
+    furnitureMultiplier += additionalFurnitureCount * 0.05
+    
+    estimatedBoxes = Math.round(estimatedBoxes * furnitureMultiplier)
+    packing = moversCount * PACKING_RATE_PER_MOVER_PER_HOUR * derivedHours
+    packingLabel = `Packing/Unpacking (${moversCount} movers x $${PACKING_RATE_PER_MOVER_PER_HOUR}/hr, ~${estimatedBoxes} boxes)`
+  } else if (packingData?.needsPacking === "no") {
+    // User already packed - charge per box
+    const boxCount = parseInt(packingData.numberOfBoxes || "0") || 0
+    packing = boxCount * BOX_PACKING_RATE
+    packingLabel = `Box handling (${boxCount} boxes x $${BOX_PACKING_RATE}/box)`
+  } else {
+    // No packing selection - default packing cost
+    packing = moversCount * PACKING_RATE_PER_MOVER_PER_HOUR * derivedHours
+    packingLabel = `Packing/Unpacking (${moversCount} movers x $${PACKING_RATE_PER_MOVER_PER_HOUR}/hr)`
+  }
+  
   const furnitureWrap = WRAP_FEE_FLAT
 
-  const cityFrom = extractCity(fromDestination)
-  const cityTo = extractCity(toDestination)
-
-  const isNYC = [
-    "nyc",
-    "new york",
-    "brooklyn",
-    "queens",
-    "bronx",
-    "staten island",
-    "long island",
-  ].some((c) => cityFrom.includes(c) || cityTo.includes(c))
-
-
-  const isJersey = ["jersey city", "hoboken", "newark"].some(
-    (c) => cityFrom.includes(c) || cityTo.includes(c)
-  )
-  const nycFactor = isNYC || isJersey ? 150 : 0
+  // City surcharge removed per requirements
   const disassembly = COMPLEX_ITEMS_COUNT * COMPLEX_ITEM_FEE
 
   const items: PriceLineItem[] = [
@@ -103,30 +156,40 @@ function computeEstimate(
       label: `Base move (${moversCount} movers x $${BASE_RATE_PER_2_MOVERS_PER_HOUR}/hr per 2 movers)`,
       amount: Math.round(baseMove),
     },
-    {
-      label: `Packing/Unpacking (${moversCount} movers x $${PACKING_RATE_PER_MOVER_PER_HOUR}/hr)`,
-      amount: Math.round(packing),
-    },
-    { label: "Furniture protection / wrapping (flat)", amount: Math.round(furnitureWrap) },
   ]
+
+  // Only add packing if it's greater than 0
+  if (packing > 0) {
+    items.push({
+      label: packingLabel,
+      amount: Math.round(packing),
+    })
+  }
+
+  items.push({ label: "Furniture protection / wrapping (flat)", amount: Math.round(furnitureWrap) })
 
   if (disassembly > 0)
     items.push({
-      label: `Complex disassembly (${COMPLEX_ITEMS_COUNT} x $${COMPLEX_ITEM_FEE})`,
+      label: `Complex items handling (${COMPLEX_ITEMS_COUNT} items x $${COMPLEX_ITEM_FEE})`,
       amount: Math.round(disassembly),
     })
-  if (nycFactor > 0)
-    items.push({ label: "City factor (NYC/Jersey premium)", amount: nycFactor })
+  const rawTotal = items.reduce((s, i) => s + i.amount, 0)
+  const MIN_TOTAL = 399
+  const notes = [
+    `Estimated hours: ${derivedHours}`,
+    "Packing materials (boxes, tape, blankets) included.",
+    "Adjust rates within market ranges as needed.",
+  ] as string[]
 
-  const total = items.reduce((s, i) => s + i.amount, 0)
+  const total = rawTotal < MIN_TOTAL ? MIN_TOTAL : rawTotal
+  if (rawTotal < MIN_TOTAL) {
+    notes.push(`Minimum service total applied: $${MIN_TOTAL}`)
+  }
+
   return {
     items,
     total,
-    notes: [
-      `Estimated hours: ${derivedHours}`,
-      "Packing materials (boxes, tape, blankets) included.",
-      "Adjust rates within market ranges as needed.",
-    ],
+    notes,
   }
 }
 
@@ -138,6 +201,20 @@ export type PriceModalProps = {
   moveType?: string
   moversCountOverride?: number
   useAI?: boolean
+  packingData?: {
+    needsPacking?: string
+    roomSize?: string
+    numberOfBoxes?: string
+    furnitureBed?: boolean
+    furnitureSofa?: boolean
+    furnitureCloset?: boolean
+    furnitureBoxes?: boolean
+    additionalFurniture?: string[]
+    customFurnitureItems?: string[]
+  }
+  complexItemsData?: {
+    complexItemsList?: string[]
+  }
 }
 
 export default function PriceModal({
@@ -148,6 +225,8 @@ export default function PriceModal({
   moveType,
   moversCountOverride,
   useAI,
+  packingData,
+  complexItemsData,
 }: PriceModalProps) {
   const inferredMovers = useMemo(() => {
     if (typeof moversCountOverride === "number" && moversCountOverride > 0) return moversCountOverride
@@ -164,8 +243,8 @@ export default function PriceModal({
 
   const result = useMemo(() => {
     if (!canEstimate) return null
-    return computeEstimate(fromDestination, toDestination, inferredMovers)
-  }, [canEstimate, fromDestination, toDestination, inferredMovers])
+    return computeEstimate(fromDestination, toDestination, inferredMovers, packingData, complexItemsData)
+  }, [canEstimate, fromDestination, toDestination, inferredMovers, packingData, complexItemsData])
 
   const [isOpen, setIsOpen] = useState(open)
   if (isOpen !== open) setIsOpen(open)
@@ -189,8 +268,16 @@ export default function PriceModal({
     setAiLoading(true)
     setAiError(null)
 
+    const packingInfo = packingData?.needsPacking === "yes" 
+      ? `needsPacking=yes, roomSize=${packingData.roomSize || ""}, furniture: bed=${packingData.furnitureBed || false}, sofa=${packingData.furnitureSofa || false}, closet=${packingData.furnitureCloset || false}, additionalItems=${(packingData.additionalFurniture?.length || 0) + (packingData.customFurnitureItems?.filter(Boolean).length || 0)}`
+      : packingData?.needsPacking === "no"
+      ? `needsPacking=no, boxes=${packingData.numberOfBoxes || 0}`
+      : "needsPacking=not specified"
+    
+    const complexItemsInfo = complexItemsData?.complexItemsList?.filter(Boolean).length || 0
+    
     const prompt = `Return JSON only. Fields: items[ {label, amount:number} ], total:number, notes:string[].
-Given: from=${fromDestination}, to=${toDestination}, movers=${inferredMovers}, moveType=${moveType || ""}.
+Given: from=${fromDestination}, to=${toDestination}, movers=${inferredMovers}, moveType=${moveType || ""}, ${packingInfo}, complexItemsCount=${complexItemsInfo}.
 Use reasonable NYC/NJ local move pricing heuristics. No prose.`
 
     const token = process.env.OPENAI_API_KEY
@@ -229,7 +316,7 @@ Use reasonable NYC/NJ local move pricing heuristics. No prose.`
       .finally(() => setAiLoading(false))
 
     return () => controller.abort()
-  }, [canEstimate, useAI, fromDestination, toDestination, inferredMovers, moveType])
+  }, [canEstimate, useAI, fromDestination, toDestination, inferredMovers, moveType, packingData, complexItemsData])
 
   const displayResult = aiResult || result
 

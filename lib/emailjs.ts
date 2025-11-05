@@ -97,6 +97,9 @@ export const formatEmailData = (formData: {
   // Additional Information
   message?: string;
   
+  // Price
+  price?: string | number;
+  
   // Stops
   stops?: Array<{
     id: string;
@@ -108,8 +111,10 @@ export const formatEmailData = (formData: {
 }) => {
   const stopsTableHTML = formData.stops ? generateStopsTableHTML(formData.stops) : '<p>No additional stops</p>';
   
-  // Get price from sessionStorage (set by price modal)
-  const storedPrice = typeof window !== 'undefined' ? sessionStorage.getItem('price') : null;
+  // Get price from parameter, then sessionStorage as fallback, then default to '0'
+  const storedPrice = formData.price 
+    ? String(formData.price) 
+    : (typeof window !== 'undefined' ? sessionStorage.getItem('price') : null);
   
   return {
     // Personal Information

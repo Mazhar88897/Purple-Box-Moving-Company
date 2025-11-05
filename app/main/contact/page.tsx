@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { initEmailJS, sendEmail, formatEmailData } from '@/lib/emailjs'
 import { useRouter } from 'next/navigation'
-import PriceModal from '@/components/dashboardItems/pricemodal'
+import PriceModal, { computeEstimate, type PackingData, type ComplexItemsData } from '@/components/dashboardItems/pricemodal'
 import Autocomplete from '@/components/ui/autocomplete'
 // import { toast } from 'react-hot-toast'
 // import { toast } from 'sonner'
+import { TrashIcon } from 'lucide-react'
 
 type StopData = {
   id: string
@@ -52,6 +53,22 @@ type QuoteFormData = {
   // Quote Options
   inPersonQuote: string
   hearAboutUs: string
+  
+  // Complex Items
+  hasComplexItems: boolean
+  complexItems: string
+  complexItemsList: string[]
+  
+  // Packing/Unpacking
+  needsPacking: string // "yes" | "no" | ""
+  numberOfBoxes: string
+  roomSize: string // "1-bedroom" | "2-bedroom" | "3+-bedroom" | "large-house" | ""
+  furnitureBed: boolean
+  furnitureSofa: boolean
+  furnitureCloset: boolean
+  furnitureBoxes: boolean
+  additionalFurniture: string[]
+  customFurnitureItems: string[]
 }
 
 const initialData: QuoteFormData = {
@@ -75,6 +92,18 @@ const initialData: QuoteFormData = {
   additionalInfo: "",
   inPersonQuote: "",
   hearAboutUs: "",
+  hasComplexItems: false,
+  complexItems: "",
+  complexItemsList: [],
+  needsPacking: "",
+  numberOfBoxes: "",
+  roomSize: "",
+  furnitureBed: false,
+  furnitureSofa: false,
+  furnitureCloset: false,
+  furnitureBoxes: false,
+  additionalFurniture: [],
+  customFurnitureItems: [],
 }
 
 const ContactPage = () => {
@@ -158,12 +187,136 @@ const ContactPage = () => {
     })
   }
 
+  // Complex items helpers
+  const addComplexItem = () => {
+    setFormData((prev) => ({
+      ...prev,
+      complexItemsList: [...(prev.complexItemsList || []), ""],
+    }))
+  }
+
+  const updateComplexItem = (index: number, value: string) => {
+    setFormData((prev) => {
+      const list = [...(prev.complexItemsList || [])]
+      list[index] = value
+      return { ...prev, complexItemsList: list }
+    })
+  }
+
+  const removeComplexItem = (index: number) => {
+    setFormData((prev) => {
+      const list = [...(prev.complexItemsList || [])]
+      list.splice(index, 1)
+      return { ...prev, complexItemsList: list }
+    })
+  }
+
+  // Keep combined complexItems string in sync (for email/backward compatibility)
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      complexItems: (prev.complexItemsList || []).filter(Boolean).join(', '),
+    }))
+  }, [formData.complexItemsList])
+
+  // Custom furniture helpers
+  const addCustomFurnitureItem = () => {
+    setFormData((prev) => ({
+      ...prev,
+      customFurnitureItems: [...(prev.customFurnitureItems || []), ""],
+    }))
+  }
+
+  const updateCustomFurnitureItem = (index: number, value: string) => {
+    setFormData((prev) => {
+      const list = [...(prev.customFurnitureItems || [])]
+      list[index] = value
+      return { ...prev, customFurnitureItems: list }
+    })
+  }
+
+  const removeCustomFurnitureItem = (index: number) => {
+    setFormData((prev) => {
+      const list = [...(prev.customFurnitureItems || [])]
+      list.splice(index, 1)
+      return { ...prev, customFurnitureItems: list }
+    })
+  }
+
+  // Handle additional furniture checkbox
+  const handleAdditionalFurnitureChange = (item: string) => {
+    setFormData((prev) => {
+      const current = prev.additionalFurniture || []
+      const isSelected = current.includes(item)
+      return {
+        ...prev,
+        additionalFurniture: isSelected
+          ? current.filter(i => i !== item)
+          : [...current, item]
+      }
+    })
+  }
+
+  // Calculate estimated boxes based on room size
+  const getEstimatedBoxes = (roomSize: string) => {
+    switch (roomSize) {
+      case "1-bedroom":
+        return "30-40 boxes"
+      case "2-bedroom":
+        return "40-50 boxes"
+      case "3+-bedroom":
+        return "50-70 boxes"
+      case "large-house":
+        return "70+ boxes"
+      default:
+        return ""
+    }
+  }
+
   const proceedSubmit = async () => {
     try {
       setIsLoading(true)
       // Get addresses from sessionStorage if form fields are not set
       const dropoffAddress = formData.dropoffAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : '') || ''
       const pickupAddress = formData.pickupAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : '') || ''
+      
+      // Calculate number of movers based on move type
+      const moveTypeLower = (formData.moveType || "").toLowerCase()
+      let moversCount = 2
+      if (moveTypeLower.includes("office")) moversCount = 3
+      if (moveTypeLower.includes("long")) moversCount = 3
+      
+      // Prepare packing data
+      const packingData: PackingData = {
+        needsPacking: formData.needsPacking,
+        roomSize: formData.roomSize,
+        numberOfBoxes: formData.numberOfBoxes,
+        furnitureBed: formData.furnitureBed,
+        furnitureSofa: formData.furnitureSofa,
+        furnitureCloset: formData.furnitureCloset,
+        furnitureBoxes: formData.furnitureBoxes,
+        additionalFurniture: formData.additionalFurniture,
+        customFurnitureItems: formData.customFurnitureItems,
+      }
+      
+      // Prepare complex items data
+      const complexItemsData: ComplexItemsData = {
+        complexItemsList: formData.complexItemsList,
+      }
+      
+      // Calculate price
+      let calculatedPrice = '0'
+      if (pickupAddress && dropoffAddress) {
+        const priceResult = computeEstimate(
+          pickupAddress,
+          dropoffAddress,
+          moversCount,
+          packingData,
+          complexItemsData
+        )
+        calculatedPrice = String(priceResult.total)
+      }
+      
       const emailData = formatEmailData({
         // Personal Information
         firstName: formData.firstName,
@@ -191,6 +344,9 @@ const ContactPage = () => {
         
         // Additional Information
         message: formData.additionalInfo || `Moving Quote Request from ${formData.firstName} ${formData.lastName}`,
+        
+        // Price
+        price: calculatedPrice,
         
         // Stops
         stops: formData.stops
@@ -283,6 +439,20 @@ const ContactPage = () => {
           fromDestination={formData.pickupAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('fromAddress') : ' ' as string ) || ''}
           toDestination={formData.dropoffAddress || (typeof window !== 'undefined' ? sessionStorage.getItem('toAddress') : ' ' as string      ) || ''}
           moveType={formData.moveType}
+          packingData={{
+            needsPacking: formData.needsPacking,
+            roomSize: formData.roomSize,
+            numberOfBoxes: formData.numberOfBoxes,
+            furnitureBed: formData.furnitureBed,
+            furnitureSofa: formData.furnitureSofa,
+            furnitureCloset: formData.furnitureCloset,
+            furnitureBoxes: formData.furnitureBoxes,
+            additionalFurniture: formData.additionalFurniture,
+            customFurnitureItems: formData.customFurnitureItems,
+          }}
+          complexItemsData={{
+            complexItemsList: formData.complexItemsList,
+          }}
         />
         {/* Header */}
         <div className=" mb-8">
@@ -566,6 +736,252 @@ const ContactPage = () => {
               </div>
             </div>
           ))}
+
+          {/* Packing/Unpacking Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Full Packing/Unpacking
+            </h2>
+            <div className="space-y-6">
+              {/* Packing Service Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Do you need packing/unpacking service?
+                </label>
+                <div className="flex space-x-6">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="needsPacking"
+                      value="yes"
+                      checked={formData.needsPacking === "yes"}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Yes, I need packing</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="needsPacking"
+                      value="no"
+                      checked={formData.needsPacking === "no"}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">No, I already packed</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Number of boxes based on packing selection */}
+              {formData.needsPacking === "yes" && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Room Size <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    name="roomSize"
+                    value={formData.roomSize}
+                    onChange={handleChange}
+                    className="w-full md:w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">Choose room size</option>
+                    <option value="1-bedroom">1-bedroom (~30-40 boxes)</option>
+                    <option value="2-bedroom">2-bedroom (~40-50 boxes)</option>
+                    <option value="3+-bedroom">3+-bedroom (~50-70 boxes)</option>
+                    <option value="large-house">Large house (70+ boxes)</option>
+                  </select>
+                  {formData.roomSize && (
+                    <p className="text-sm text-gray-500 mt-2">
+                      Estimated: {getEstimatedBoxes(formData.roomSize)}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {formData.needsPacking === "no" && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    How many boxes do you already have? <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    name="numberOfBoxes"
+                    value={formData.numberOfBoxes}
+                    onChange={handleChange}
+                    placeholder="Enter number of boxes"
+                    min="0"
+                    className="w-full md:w-[400px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+              )}
+
+              {/* Amount of furniture and belongings */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Amount of furniture and belongings:
+                </label>
+                <div className="space-y-2">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.furnitureBed}
+                      onChange={(e) => setFormData(prev => ({ ...prev, furnitureBed: e.target.checked }))}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Bed</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.furnitureSofa}
+                      onChange={(e) => setFormData(prev => ({ ...prev, furnitureSofa: e.target.checked }))}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Sofa</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.furnitureCloset}
+                      onChange={(e) => setFormData(prev => ({ ...prev, furnitureCloset: e.target.checked }))}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Closet</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.furnitureBoxes}
+                      onChange={(e) => setFormData(prev => ({ ...prev, furnitureBoxes: e.target.checked }))}
+                      className="mr-2"
+                    />
+                    <span className="text-gray-700">Boxes</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Anything else? */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Anything else?
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                  {[
+                    "Dining Table",
+                    "Desk",
+                    "TV Stand",
+                    "Bookshelf",
+                    "Dresser",
+                    "Nightstand",
+                    "Coffee Table",
+                    "Armchair",
+                    "Mirror",
+                    "Artwork",
+                    "Appliances",
+                    "Exercise Equipment"
+                  ].map((item) => (
+                    <label key={item} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.additionalFurniture?.includes(item) || false}
+                        onChange={() => handleAdditionalFurnitureChange(item)}
+                        className="mr-2"
+                      />
+                      <span className="text-gray-700">{item}</span>
+                    </label>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  {(formData.customFurnitureItems || []).map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <input
+                        type="text"
+                        value={item}
+                        onChange={(e) => updateCustomFurnitureItem(index, e.target.value)}
+                        placeholder="Enter custom item name"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeCustomFurnitureItem(index)}
+                        className="text-red-500 hover:text-red-700 px-2 py-2"
+                        aria-label={`Remove item ${index + 1}`}
+                      >
+                        <TrashIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="flex items-center text-purple-600 cursor-pointer" onClick={addCustomFurnitureItem}>
+                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-2">
+                      <span className="text-white text-lg">+</span>
+                    </div>
+                    <span>Add custom item</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+{/* 
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Complex items
+            </h2>
+            <div className="space-y-4">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="hasComplexItems"
+                  checked={formData.hasComplexItems}
+                  onChange={(e) => {
+                    const checked = e.target.checked
+                    setFormData((prev) => ({
+                      ...prev,
+                      hasComplexItems: checked,
+                      complexItemsList: checked
+                        ? (prev.complexItemsList && prev.complexItemsList.length ? prev.complexItemsList : [""])
+                        : [],
+                    }))
+                  }}
+                  className="mr-2"
+                />
+                <span className="text-gray-700">Do you have any complex items?</span>
+              </label>
+              {formData.hasComplexItems && (
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Please list the complex items (e.g., piano, safe, pool table)
+                  </label>
+                  {(formData.complexItemsList || []).map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <input
+                        type="text"
+                        value={item}
+                        onChange={(e) => updateComplexItem(index, e.target.value)}
+                        placeholder={`Item ${index + 1}`}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeComplexItem(index)}
+                        className="text-red-500 hover:text-red-700 px-2 py-2"
+                        aria-label={`Remove item ${index + 1}`}
+                      >
+                        <TrashIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="flex items-center text-purple-600 cursor-pointer" onClick={addComplexItem}>
+                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-2">
+                      <span className="text-white text-lg">+</span>
+                    </div>
+                    <span>Add item</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div> */}
 
           {/* Personal Information and Quote Options */}
           <div className="bg-white rounded-lg shadow-sm p-6">
